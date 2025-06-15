@@ -1,0 +1,10 @@
+{
+  "background_color": "#ffffff",
+  "description": "ibc2025",
+  "display": "standalone",
+  "name": "ibc2025",
+  "short_name": "ibc2025",
+  "start_url": "/index.html",
+  "theme_color": "#ffffff",
+  "scope": "/"
+}
