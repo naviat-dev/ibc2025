@@ -25,5 +25,8 @@
       SkiaRenderer;
     </UnoFeatures>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="HtmlAgilityPack" />
+  </ItemGroup>
 
 </Project>

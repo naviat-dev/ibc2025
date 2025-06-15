@@ -1,18 +1,22 @@
 using System;
 using Microsoft.Extensions.Logging;
 using Uno.Resizetizer;
+using HtmlAgilityPack;
 
 namespace ibc2025;
 
 public partial class App : Application
 {
+    public List<Question> Questions = [];
+
     /// <summary>
     /// Initializes the singleton application object. This is the first line of authored code
     /// executed, and as such is the logical equivalent of main() or WinMain().
-    /// </summary>
+    /// </summary>`
     public App()
     {
         this.InitializeComponent();
+        Start();
     }
 
     protected Window? MainWindow { get; private set; }
@@ -129,5 +133,29 @@ public partial class App : Application
         global::Uno.UI.Adapter.Microsoft.Extensions.Logging.LoggingAdapter.Initialize();
 #endif
 #endif
+    }
+
+    public void Start ()
+    {
+        HtmlDocument questionDoc = new();
+        questionDoc.LoadHtml(new StreamReader(File.OpenRead("Assets/question-bank.html")).ReadToEnd());
+        foreach (HtmlNode node in questionDoc.DocumentNode.SelectSingleNode("//tbody").SelectNodes("tr"))
+        {
+            HtmlDocument innerNode = new();
+            innerNode.LoadHtml(node.OuterHtml); // For some reason, simply using the node in the foreach loop returns weird and incorrect results
+            HtmlNodeCollection questionData = innerNode.DocumentNode.SelectNodes("//td");
+            if (questionData[0].InnerHtml.Length == 0)
+            {
+                continue;
+            }
+            else if (questionData[5].InnerHtml.Length == 1)
+            {
+                Questions.Add(new Question(questionData[0].InnerHtml.Replace("\n", ""), questionData[5].InnerHtml.Replace("\n", ""), [questionData[1].InnerHtml.Replace("\n", ""), questionData[2].InnerHtml.Replace("\n", ""), questionData[3].InnerHtml.Replace("\n", ""), questionData[4].InnerHtml.Replace("\n", "")], questionData[6].InnerHtml.Replace("\n", "")));
+            }
+            else if (questionData[5].InnerHtml.Length == 0)
+            {
+                Questions.Add(new Question(questionData[1].InnerHtml.Replace("\n", ""), questionData[5].InnerHtml.Replace("\n", ""), questionData[6].InnerHtml.Replace("\n", "")));
+            }
+        }
     }
 }
