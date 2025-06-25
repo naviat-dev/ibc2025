@@ -6,7 +6,7 @@
     <UnoSingleProject>true</UnoSingleProject>
 
     <!-- Display name -->
-    <ApplicationTitle>ibc2025</ApplicationTitle>
+    <ApplicationTitle>International Bible Quiz</ApplicationTitle>
     <!-- App Identifier -->
     <ApplicationId>org.mfmym.ibc2025</ApplicationId>
     <!-- Versions -->
