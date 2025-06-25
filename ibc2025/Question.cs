@@ -1,3 +1,5 @@
+namespace ibc2025;
+
 public class Question
 {
     public string QuestionText { get; }
