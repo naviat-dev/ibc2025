@@ -6,11 +6,14 @@ namespace ibc2025;
 public partial class App : Application
 {
     public List<Question> Questions = [];
+    public static readonly int[] TeamPts = [0, 0, 0, 0, 0, 0, 0];
+
+    public static bool MASTER_MODE;
 
     /// <summary>
     /// Initializes the singleton application object. This is the first line of authored code
     /// executed, and as such is the logical equivalent of main() or WinMain().
-    /// </summary>`
+    /// </summary>
     public App()
     {
         this.InitializeComponent();
@@ -133,7 +136,7 @@ public partial class App : Application
 #endif
     }
 
-    public void Start ()
+    public void Start()
     {
         HtmlDocument questionDoc = new();
         questionDoc.LoadHtml(new StreamReader(File.OpenRead("Assets/question-bank.html")).ReadToEnd());
