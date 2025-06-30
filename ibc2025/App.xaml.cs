@@ -143,6 +143,11 @@ public partial class App : Application
     {
         FileStream fileStream = new("Assets/questions.tsv", FileMode.Open, FileAccess.Read);
         using StreamReader reader = new(fileStream);
+        DailyBackground = new LinearGradientBrush
+        {
+            StartPoint = new Windows.Foundation.Point(0, 0),
+            EndPoint = new Windows.Foundation.Point(1, 1)
+        };
         if (date.ToString().Split(" ")[0] == "7/17/25")
         {
             DailyBackground.GradientStops.Add(new GradientStop { Color = Windows.UI.Color.FromArgb(255, 25, 48, 115), Offset = 0 });
@@ -178,10 +183,5 @@ public partial class App : Application
             string[] line = reader.ReadLine().Split('\t');
             Questions.Add(line[2].Length > 0 ? new Question(line[1], line[6], [line[2], line[3], line[4], line[5]], line[7]) : new Question(line[1], line[6], line[7]));
         }
-        DailyBackground = new LinearGradientBrush
-        {
-            StartPoint = new Windows.Foundation.Point(0, 0),
-            EndPoint = new Windows.Foundation.Point(1, 1)
-        };
     }
 }
