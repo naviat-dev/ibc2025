@@ -6,22 +6,22 @@ public class Question
     public string Answer { get; }
     public string Reference { get; }
     public string[]? Options { get; }
-    public Boolean IsMultiChoice { get; }
+    public bool IsMultiChoice { get; }
 
     public Question(string questionText, string answer, string[] options, string reference)
     {
-        this.QuestionText = questionText;
-        this.Answer = answer;
-        this.Options = options;
-        this.Reference = reference;
-        this.IsMultiChoice = true;
+        QuestionText = questionText;
+        Answer = answer;
+        Options = options;
+        Reference = reference;
+        IsMultiChoice = true;
     }
 
     public Question(string questionText, string answer, string reference)
     {
-        this.QuestionText = questionText;
-        this.Answer = answer;
-        this.Reference = reference;
-        this.IsMultiChoice = false;
+        QuestionText = questionText;
+        Answer = answer;
+        Reference = reference;
+        IsMultiChoice = false;
     }
 }

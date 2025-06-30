@@ -19,7 +19,7 @@ public partial class App : Application
     public App()
     {
         Console.WriteLine(date);
-        this.InitializeComponent();
+        InitializeComponent();
         Start();
     }
 

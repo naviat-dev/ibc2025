@@ -4,7 +4,7 @@ public sealed partial class QuestionPage : Page
 {
     public QuestionPage()
     {
-        this.InitializeComponent();
+        InitializeComponent();
         PageBackground.Background = App.DailyBackground;
     }
 }

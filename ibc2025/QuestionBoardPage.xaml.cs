@@ -4,7 +4,7 @@ public sealed partial class QuestionBoardPage : Page
 {
     public QuestionBoardPage()
     {
-        this.InitializeComponent();
+        InitializeComponent();
         PageBackground.Background = App.DailyBackground;
         FillGridWithButtons(QuestionBoard);
     }
