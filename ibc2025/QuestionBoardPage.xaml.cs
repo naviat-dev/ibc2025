@@ -5,11 +5,12 @@ public sealed partial class QuestionBoardPage : Page
     public QuestionBoardPage()
     {
         this.InitializeComponent();
+        PageBackground.Background = App.DailyBackground;
         FillGridWithButtons(QuestionBoard);
     }
 
     // Example: Fill a Grid with Buttons (assume you have a Grid named "MyGrid" in XAML)
-    public static void FillGridWithButtons(Grid grid)
+    public void FillGridWithButtons(Grid grid)
     {
         int rows = grid.RowDefinitions.Count;
         int cols = grid.ColumnDefinitions.Count;
@@ -28,19 +29,34 @@ public sealed partial class QuestionBoardPage : Page
                 };
                 button.SetValue(Grid.RowProperty, row);
                 button.SetValue(Grid.ColumnProperty, col);
+                button.Click += (s, e) => GoToQuestion(s, e);
                 button.HorizontalContentAlignment = HorizontalAlignment.Center;
                 button.VerticalContentAlignment = VerticalAlignment.Center;
                 button.Loaded += (s, e) =>
                 {
                     var btn = (Button)s;
-                    // Set font size to fill button (simple approach)
                     double min = Math.Min(btn.ActualWidth, btn.ActualHeight);
-                    btn.FontSize = min * 0.5; // Adjust multiplier as needed
                 };
                 Grid.SetRow(button, row);
                 Grid.SetColumn(button, col);
                 grid.Children.Add(button);
             }
+        }
+    }
+
+    private void GoToQuestion(object sender, RoutedEventArgs e)
+    {
+        var btn = (Button)sender;
+        if (App.MASTER_MODE)
+        {
+            // Handle master mode logic here
+            Console.WriteLine($"Master mode: Button {btn.Name} clicked.");
+            _ = ((Frame)Window.Current.Content).Navigate(typeof(QuestionPage));
+        }
+        else
+        {
+            // Handle mirror mode logic here
+            Console.WriteLine("You can't click buttons in mirror mode.");
         }
     }
 }

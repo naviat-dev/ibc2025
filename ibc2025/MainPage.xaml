@@ -2,52 +2,50 @@
 	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	  xmlns:local="using:ibc2025"
-	  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-	<ScrollViewer IsTabStop="True">
-		<StackPanel
-			HorizontalAlignment="Center"
-			VerticalAlignment="Center">
-			<TextBlock
-				Text="INTERNATIONAL BIBLE QUIZ"
-				FontSize="50"
+	  x:Name="PageBackground">
+	<StackPanel
+		HorizontalAlignment="Center"
+		VerticalAlignment="Center">
+		<TextBlock
+			Text="INTERNATIONAL BIBLE QUIZ"
+			FontSize="50"
+			FontFamily="Bahnschrift"
+			HorizontalAlignment="Center"/>
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+
+			<Button
+				Grid.Row="0"
+				Grid.Column="0"
+				Content="Start as Master"
+				FontSize="30"
 				FontFamily="Bahnschrift"
-				HorizontalAlignment="Center"/>
-			<Grid>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="*"/>
-				</Grid.RowDefinitions>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="*"/>
-				</Grid.ColumnDefinitions>
+				HorizontalAlignment="Center"
+				VerticalAlignment="Center"
+				Margin="10"
+				Padding="20,10"
+				IsTabStop="True"
+				Click="StartMaster"/>
 
-				<Button
-					Grid.Row="0"
-					Grid.Column="0"
-					Content="Start as Master"
-					FontSize="30"
-					FontFamily="Bahnschrift"
-					HorizontalAlignment="Center"
-					VerticalAlignment="Center"
-					Margin="10"
-					Padding="20,10"
-					IsTabStop="True"
-					Click="StartMaster"/>
-
-				<Button
-					Grid.Row="0"
-					Grid.Column="1"
-					Content="Start as Mirror"
-					FontSize="30"
-					FontFamily="Bahnschrift"
-					HorizontalAlignment="Center"
-					VerticalAlignment="Center"
-					Margin="10"
-					Padding="20,10"
-					IsTabStop="True"
-					Click="StartMirror"/>
-			</Grid>
-		</StackPanel>
-	</ScrollViewer>
+			<Button
+				Grid.Row="0"
+				Grid.Column="1"
+				Content="Start as Mirror"
+				FontSize="30"
+				FontFamily="Bahnschrift"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Center"
+				Margin="10"
+				Padding="20,10"
+				IsTabStop="True"
+				Click="StartMirror"/>
+		</Grid>
+	</StackPanel>
 </Page>

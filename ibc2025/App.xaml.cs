@@ -1,5 +1,5 @@
+using Uno.Extensions.Specialized;
 using Uno.Resizetizer;
-using HtmlAgilityPack;
 
 namespace ibc2025;
 
@@ -7,8 +7,10 @@ public partial class App : Application
 {
     public List<Question> Questions = [];
     public static readonly int[] TeamPts = [0, 0, 0, 0, 0, 0, 0];
-
     public static bool MASTER_MODE;
+    public static LinearGradientBrush DailyBackground;
+    public static DateTime date = DateTime.Today;
+    public readonly Dictionary<string, Action> _commands;
 
     /// <summary>
     /// Initializes the singleton application object. This is the first line of authored code
@@ -16,6 +18,7 @@ public partial class App : Application
     /// </summary>
     public App()
     {
+        Console.WriteLine(date);
         this.InitializeComponent();
         Start();
     }
@@ -138,25 +141,47 @@ public partial class App : Application
 
     public void Start()
     {
-        HtmlDocument questionDoc = new();
-        questionDoc.LoadHtml(new StreamReader(File.OpenRead("Assets/question-bank.html")).ReadToEnd());
-        foreach (HtmlNode node in questionDoc.DocumentNode.SelectSingleNode("//tbody").SelectNodes("tr"))
+        FileStream fileStream = new("Assets/questions.tsv", FileMode.Open, FileAccess.Read);
+        using StreamReader reader = new(fileStream);
+        if (date.ToString().Split(" ")[0] == "7/17/25")
         {
-            HtmlDocument innerNode = new();
-            innerNode.LoadHtml(node.OuterHtml); // For some reason, simply using the node in the foreach loop returns weird and incorrect results
-            HtmlNodeCollection questionData = innerNode.DocumentNode.SelectNodes("//td");
-            if (questionData[0].InnerHtml.Length == 0)
-            {
-                continue;
-            }
-            else if (questionData[5].InnerHtml.Length == 1)
-            {
-                Questions.Add(new Question(questionData[0].InnerHtml.Replace("\n", ""), questionData[5].InnerHtml.Replace("\n", ""), [questionData[1].InnerHtml.Replace("\n", ""), questionData[2].InnerHtml.Replace("\n", ""), questionData[3].InnerHtml.Replace("\n", ""), questionData[4].InnerHtml.Replace("\n", "")], questionData[6].InnerHtml.Replace("\n", "")));
-            }
-            else if (questionData[5].InnerHtml.Length == 0)
-            {
-                Questions.Add(new Question(questionData[1].InnerHtml.Replace("\n", ""), questionData[5].InnerHtml.Replace("\n", ""), questionData[6].InnerHtml.Replace("\n", "")));
-            }
+            DailyBackground.GradientStops.Add(new GradientStop { Color = Windows.UI.Color.FromArgb(255, 25, 48, 115), Offset = 0 });
+            DailyBackground.GradientStops.Add(new GradientStop { Color = Windows.UI.Color.FromArgb(255, 39, 20, 82), Offset = 1 });
         }
+        else if (date.ToString().Split(" ")[0] == "7/18/25")
+        {
+            for (int i = 0; i < 70; i++)
+            {
+                reader.ReadLine(); // Skip the first 70 lines
+            }
+            DailyBackground.GradientStops.Add(new GradientStop { Color = Windows.UI.Color.FromArgb(255, 39, 20, 82), Offset = 0 });
+            DailyBackground.GradientStops.Add(new GradientStop { Color = Windows.UI.Color.FromArgb(255, 8, 62, 71), Offset = 1 });
+        }
+        else if (date.ToString().Split(" ")[0] == "7/19/25")
+        {
+            for (int i = 0; i < 140; i++)
+            {
+                reader.ReadLine(); // Skip the first 140 lines
+            }
+            DailyBackground.GradientStops.Add(new GradientStop { Color = Windows.UI.Color.FromArgb(255, 8, 62, 71), Offset = 0 });
+            DailyBackground.GradientStops.Add(new GradientStop { Color = Windows.UI.Color.FromArgb(255, 108, 43, 112), Offset = 1 });
+        }
+        else
+        {
+            DailyBackground.GradientStops.Add(new GradientStop { Color = Windows.UI.Color.FromArgb(255, 25, 48, 115), Offset = 0 });
+            DailyBackground.GradientStops.Add(new GradientStop { Color = Windows.UI.Color.FromArgb(255, 39, 20, 82), Offset = 0.333 });
+            DailyBackground.GradientStops.Add(new GradientStop { Color = Windows.UI.Color.FromArgb(255, 8, 62, 71), Offset = 0.667 });
+            DailyBackground.GradientStops.Add(new GradientStop { Color = Windows.UI.Color.FromArgb(255, 108, 43, 112), Offset = 1 });
+        }
+        for (int i = 0; i < 70; i++)
+        {
+            string[] line = reader.ReadLine().Split('\t');
+            Questions.Add(line[2].Length > 0 ? new Question(line[1], line[6], [line[2], line[3], line[4], line[5]], line[7]) : new Question(line[1], line[6], line[7]));
+        }
+        DailyBackground = new LinearGradientBrush
+        {
+            StartPoint = new Windows.Foundation.Point(0, 0),
+            EndPoint = new Windows.Foundation.Point(1, 1)
+        };
     }
 }

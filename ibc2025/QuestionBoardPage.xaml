@@ -2,12 +2,14 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:local="using:ibc2025"
-      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+      x:Name="PageBackground">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
         <Grid
             x:Name="QuestionBoard"
-            Grid.Row="1"
-            Margin="0 0 200 0"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
@@ -32,5 +34,8 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
         </Grid>
+        <StackPanel>
+
+        </StackPanel>
     </Grid>
 </Page>

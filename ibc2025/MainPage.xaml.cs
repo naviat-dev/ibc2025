@@ -5,6 +5,7 @@ public sealed partial class MainPage : Page
     public MainPage()
     {
         this.InitializeComponent();
+        PageBackground.Background = App.DailyBackground;
     }
 
     private void StartMaster(object sender, RoutedEventArgs e)
