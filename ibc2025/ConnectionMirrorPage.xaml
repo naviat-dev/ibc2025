@@ -1,0 +1,32 @@
+<Page x:Class="ibc2025.ConnectionMirrorPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:ibc2025"
+      x:Name="PageBackground">
+    <Grid x:Name="RootGrid"
+          HorizontalAlignment="Stretch"
+          VerticalAlignment="Stretch">
+        <Grid.RenderTransform>
+            <TranslateTransform x:Name="MainTransform"/>
+        </Grid.RenderTransform>
+        <StackPanel
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+            <TextBlock
+                Text="Waiting for a master application..."
+                FontSize="50"
+                FontFamily="Bahnschrift"
+                HorizontalAlignment="Center"/>
+            <Button
+                    Content="Back to Home"
+                    FontSize="30"
+                    FontFamily="Bahnschrift"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="10"
+                    Padding="20,10"
+                    IsTabStop="True"
+                    Click="GoToMain"/>
+        </StackPanel>
+    </Grid>
+</Page>
