@@ -1,3 +1,4 @@
+using Microsoft.UI.Xaml.Media.Animation;
 using Uno.Extensions.Specialized;
 using Uno.Resizetizer;
 
@@ -182,5 +183,88 @@ public partial class App : Application
             string[] line = reader.ReadLine().Split('\t');
             Questions.Add(line[2].Length > 0 ? new Question(line[1], line[6], [line[2], line[3], line[4], line[5]], line[7]) : new Question(line[1], line[6], line[7]));
         }
+    }
+
+    public static Storyboard SlideOutAnimation(string axis, TimeSpan duration, DependencyObject elementOpacity, DependencyObject elementTrans, int offset = -200)
+    {
+        Storyboard storyboard = new();
+
+        DoubleAnimation animationPos = new()
+        {
+            From = 0,
+            To = offset,
+            Duration = duration,
+            EasingFunction = new ExponentialEase
+            {
+                EasingMode = EasingMode.EaseOut,
+                Exponent = 5
+            }
+        };
+
+        DoubleAnimation animationOpacity = new()
+        {
+            To = 0,
+            Duration = duration,
+            EasingFunction = new ExponentialEase
+            {
+                EasingMode = EasingMode.EaseOut,
+                Exponent = 5
+            }
+        };
+
+        Storyboard.SetTarget(animationOpacity, elementOpacity);
+        Storyboard.SetTargetProperty(animationOpacity, "Opacity");
+
+        storyboard.Children.Add(animationOpacity);
+
+        Storyboard.SetTarget(animationPos, elementTrans);
+        Storyboard.SetTargetProperty(animationPos, axis);
+
+        storyboard.Children.Add(animationPos);
+        storyboard.Begin();
+
+        return storyboard;
+    }
+
+    public static Storyboard SlideInAnimation(string axis, TimeSpan duration, DependencyObject elementOpacity, DependencyObject elementTrans, int offset = -200)
+    {
+        Storyboard storyboard = new();
+
+        DoubleAnimation animationPos = new()
+        {
+            From = offset,
+            To = 0,
+            Duration = duration,
+            EasingFunction = new ExponentialEase
+            {
+                EasingMode = EasingMode.EaseOut,
+                Exponent = 5
+            }
+        };
+
+        DoubleAnimation animationOpacity = new()
+        {
+            From = 0,
+            To = 1,
+            Duration = duration,
+            EasingFunction = new ExponentialEase
+            {
+                EasingMode = EasingMode.EaseOut,
+                Exponent = 5
+            }
+        };
+
+        Storyboard.SetTarget(animationOpacity, elementOpacity);
+        Storyboard.SetTargetProperty(animationOpacity, "Opacity");
+
+        storyboard.Children.Add(animationOpacity);
+
+        Storyboard.SetTarget(animationPos, elementTrans);
+        Storyboard.SetTargetProperty(animationPos, axis);
+
+        storyboard.Children.Add(animationPos);
+        storyboard.Begin();
+
+        return storyboard;
     }
 }
