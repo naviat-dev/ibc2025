@@ -18,7 +18,6 @@ public partial class App : Application
     /// </summary>
     public App()
     {
-        Console.WriteLine(date);
         InitializeComponent();
         Start();
     }
@@ -148,12 +147,12 @@ public partial class App : Application
             StartPoint = new Windows.Foundation.Point(0, 0),
             EndPoint = new Windows.Foundation.Point(1, 1)
         };
-        if (date.ToString().Split(" ")[0] == "7/17/25")
+        if (date.ToString().Split(" ")[0] == "7/17/2025")
         {
             DailyBackground.GradientStops.Add(new GradientStop { Color = Windows.UI.Color.FromArgb(255, 25, 48, 115), Offset = 0 });
             DailyBackground.GradientStops.Add(new GradientStop { Color = Windows.UI.Color.FromArgb(255, 39, 20, 82), Offset = 1 });
         }
-        else if (date.ToString().Split(" ")[0] == "7/18/25")
+        else if (date.ToString().Split(" ")[0] == "7/18/2025")
         {
             for (int i = 0; i < 70; i++)
             {
@@ -162,7 +161,7 @@ public partial class App : Application
             DailyBackground.GradientStops.Add(new GradientStop { Color = Windows.UI.Color.FromArgb(255, 39, 20, 82), Offset = 0 });
             DailyBackground.GradientStops.Add(new GradientStop { Color = Windows.UI.Color.FromArgb(255, 8, 62, 71), Offset = 1 });
         }
-        else if (date.ToString().Split(" ")[0] == "7/19/25")
+        else if (date.ToString().Split(" ")[0] == "6/30/2025")
         {
             for (int i = 0; i < 140; i++)
             {
