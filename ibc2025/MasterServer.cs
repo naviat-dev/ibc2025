@@ -6,9 +6,9 @@ public class MasterPinger
 {
     private readonly HttpClient _http = new();
 
-    public async Task SendPingAsync(string mirrorIp, string methodName)
+    public async Task SendPingAsync(string mirrorIp, string methodName, string sender)
     {
-        StringContent content = new (methodName, Encoding.UTF8, "text/plain");
+        StringContent content = new (methodName + "," + sender, Encoding.UTF8, "text/plain");
 
         try
         {
