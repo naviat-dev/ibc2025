@@ -1,3 +1,7 @@
+using System.Numerics;
+using Microsoft.UI.Xaml.Media.Animation;
+using Windows.UI.Core;
+
 namespace ibc2025;
 
 public sealed partial class QuestionBoardPage : Page
@@ -7,6 +11,13 @@ public sealed partial class QuestionBoardPage : Page
         InitializeComponent();
         PageBackground.Background = App.DailyBackground;
         FillGridWithButtons(QuestionBoard);
+        Region1Watcher();
+        Region2Watcher();
+        Region3Watcher();
+        Region4Watcher();
+        RegionCEWatcher();
+        RegionCWWatcher();
+        RegionCSWatcher();
     }
 
     // Example: Fill a Grid with Buttons (assume you have a Grid named "MyGrid" in XAML)
@@ -57,6 +68,174 @@ public sealed partial class QuestionBoardPage : Page
         {
             // Handle mirror mode logic here
             Console.WriteLine("You can't click buttons in mirror mode.");
+        }
+    }
+
+    private void RegionIncr(object sender, RoutedEventArgs e)
+    {
+        string region = sender.GetValue(NameProperty).ToString()[..7].Replace("Region", "");
+        App.TeamPts[int.Parse(region) - 1] += 100;
+    }
+
+    private void RegionDecr(object sender, RoutedEventArgs e)
+    {
+        string region = sender.GetValue(NameProperty).ToString()[..7].Replace("Region", "");
+        App.TeamPts[int.Parse(region) - 1] -= 100;
+    }
+
+    private static Storyboard QuestionBtnDeactivate(object sender)
+    {
+        ColorAnimation colorAnim = new()
+        {
+            To = Windows.UI.Color.FromArgb(255, 50, 50, 50), // or any other color
+            Duration = TimeSpan.FromMilliseconds(800)
+        };
+
+        Storyboard.SetTarget(colorAnim, ((Button)sender).Background);
+        Storyboard.SetTargetProperty(colorAnim, "Color");
+
+        Storyboard storyboard = new();
+        storyboard.Children.Add(colorAnim);
+        return storyboard;
+    }
+
+    private async void Region1Watcher()
+    {
+        while (true)
+        {
+            if (App.TeamPtsDsply[0] != App.TeamPts[0])
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    App.TeamPtsDsply[0] += App.TeamPtsDsply[0] < App.TeamPts[0] ? 1 : -1;
+                    Region1Pts.Text = App.TeamPtsDsply[0].ToString();
+                    await Task.Delay(5);
+                }
+            }
+            else
+            {
+                await Task.Delay(100);
+            }
+        }
+    }
+
+    private async void Region2Watcher()
+    {
+        while (true)
+        {
+            if (App.TeamPtsDsply[1] != App.TeamPts[1])
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    App.TeamPtsDsply[1] += App.TeamPtsDsply[1] < App.TeamPts[1] ? 1 : -1;
+                    // Region2Pts.Text = App.TeamPtsDsply[1].ToString();
+                    await Task.Delay(5);
+                }
+            }
+            else
+            {
+                await Task.Delay(100);
+            }
+        }
+    }
+
+    private async void Region3Watcher()
+    {
+        while (true)
+        {
+            if (App.TeamPtsDsply[2] != App.TeamPts[2])
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    App.TeamPtsDsply[2] += App.TeamPtsDsply[2] < App.TeamPts[2] ? 1 : -1;
+                    // Region3Pts.Text = App.TeamPtsDsply[2].ToString();
+                    await Task.Delay(5);
+                }
+            }
+            else
+            {
+                await Task.Delay(100);
+            }
+        }
+    }
+
+    private async void Region4Watcher()
+    {
+        while (true)
+        {
+            if (App.TeamPtsDsply[3] != App.TeamPts[3])
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    App.TeamPtsDsply[3] += App.TeamPtsDsply[3] < App.TeamPts[3] ? 1 : -1;
+                    // Region4Pts.Text = App.TeamPtsDsply[3].ToString();
+                    await Task.Delay(5);
+                }
+            }
+            else
+            {
+                await Task.Delay(100);
+            }
+        }
+    }
+
+    private async void RegionCEWatcher()
+    {
+        while (true)
+        {
+            if (App.TeamPtsDsply[4] != App.TeamPts[4])
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    App.TeamPtsDsply[4] += App.TeamPtsDsply[4] < App.TeamPts[4] ? 1 : -1;
+                    // Region5Pts.Text = App.TeamPtsDsply[4].ToString();
+                    await Task.Delay(5);
+                }
+            }
+            else
+            {
+                await Task.Delay(100);
+            }
+        }
+    }
+
+    private async void RegionCWWatcher()
+    {
+        while (true)
+        {
+            if (App.TeamPtsDsply[5] != App.TeamPts[5])
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    App.TeamPtsDsply[5] += App.TeamPtsDsply[5] < App.TeamPts[5] ? 1 : -1;
+                    // Region6Pts.Text = App.TeamPtsDsply[5].ToString();
+                    await Task.Delay(5);
+                }
+            }
+            else
+            {
+                await Task.Delay(100);
+            }
+        }
+    }
+    
+    private async void RegionCSWatcher()
+    {
+        while (true)
+        {
+            if (App.TeamPtsDsply[6] != App.TeamPts[6])
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    App.TeamPtsDsply[6] += App.TeamPtsDsply[6] < App.TeamPts[6] ? 1 : -1;
+                    // Region7Pts.Text = App.TeamPtsDsply[6].ToString();
+                    await Task.Delay(5);
+                }
+            }
+            else
+            {
+                await Task.Delay(100);
+            }
         }
     }
 }
