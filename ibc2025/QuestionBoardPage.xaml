@@ -4,38 +4,132 @@
       xmlns:local="using:ibc2025"
       x:Name="PageBackground">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="200"/>
-        </Grid.ColumnDefinitions>
-        <Grid
-            x:Name="QuestionBoard"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-        </Grid>
-        <StackPanel>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel
+            Grid.Row="0"
+            Orientation="Horizontal"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+            <Image
+                Source="Assets/ibc-logo.png"
+                Margin="10"/>
+            <TextBlock
+                Text="INTERNATIONAL BIBLE QUIZ"
+                FontSize="50"
+                FontFamily="Bahnschrift"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="20,0,0,0"/>
         </StackPanel>
+        <Grid
+            Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="300"/>
+            </Grid.ColumnDefinitions>
+            <Grid
+                Column="1"
+                x:Name="QuestionBoard"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Margin="0, 0, 20, 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+            <Grid
+                Column="2">
+                <Grid.Background>
+                    <LinearGradientBrush
+                        StartPoint="0,0"
+                        EndPoint="1,0">
+                        <GradientStop
+                            x:Name="StartStop"
+                            Color="#00000000"
+                            Offset="0"/>
+                        <GradientStop
+                            x:Name="EndStop"
+                            Color="#00000000"
+                            Offset="1"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="220"/>
+                    <ColumnDefinition Width="40"/>
+                </Grid.ColumnDefinitions>
+                <Button
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Content="-"
+                    x:Name="Region1DecrBtn"
+                    Click="RegionDecr"
+                    FontFamily="Bahnschrift"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"/>
+                <StackPanel
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                    <TextBlock
+                        Text="Region 1"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Margin="0,10,0,0"
+                        FontFamily="Bahnschrift"
+                        FontSize="20"/>
+                    <TextBlock
+                        Text="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Margin="0,10,0,0"
+                        FontFamily="Bahnschrift"
+                        FontSize="50"
+                        x:Name="Region1Pts"/>
+                </StackPanel>
+                <Button
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Content="+"
+                    x:Name="Region1IncrBtn"
+                    Click="RegionIncr"
+                    FontFamily="Bahnschrift"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"/>
+            </Grid>
+        </Grid>
     </Grid>
+
 </Page>
