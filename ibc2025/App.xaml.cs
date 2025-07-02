@@ -221,7 +221,6 @@ public partial class App : Application
         Storyboard.SetTargetProperty(animationPos, axis);
 
         storyboard.Children.Add(animationPos);
-        storyboard.Begin();
 
         return storyboard;
     }
