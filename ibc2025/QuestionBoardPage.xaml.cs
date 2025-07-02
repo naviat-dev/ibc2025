@@ -21,7 +21,7 @@ public sealed partial class QuestionBoardPage : Page
     }
 
     // Example: Fill a Grid with Buttons (assume you have a Grid named "MyGrid" in XAML)
-    public void FillGridWithButtons(Grid grid)
+    public static void FillGridWithButtons(Grid grid)
     {
         int rows = grid.RowDefinitions.Count;
         int cols = grid.ColumnDefinitions.Count;
@@ -30,22 +30,23 @@ public sealed partial class QuestionBoardPage : Page
         {
             for (int col = 0; col < cols; col++)
             {
-                var button = new Button
+                Button button = new()
                 {
                     Content = row * cols + col + 1,
                     FontFamily = new FontFamily("Bahnschrift"),
                     Name = "Q" + (row * cols + col + 1),
                     HorizontalAlignment = HorizontalAlignment.Stretch,
-                    VerticalAlignment = VerticalAlignment.Stretch
+                    VerticalAlignment = VerticalAlignment.Stretch,
+                    Background = new SolidColorBrush(Windows.UI.ColorHelper.FromArgb(15, 50, 50, 50))
                 };
                 button.SetValue(Grid.RowProperty, row);
                 button.SetValue(Grid.ColumnProperty, col);
-                button.Click += (s, e) => GoToQuestion(s, e);
+                button.Click += GoToQuestion;
                 button.HorizontalContentAlignment = HorizontalAlignment.Center;
                 button.VerticalContentAlignment = VerticalAlignment.Center;
                 button.Loaded += (s, e) =>
                 {
-                    var btn = (Button)s;
+                    Button btn = (Button)s;
                     double min = Math.Min(btn.ActualWidth, btn.ActualHeight);
                 };
                 Grid.SetRow(button, row);
@@ -55,18 +56,24 @@ public sealed partial class QuestionBoardPage : Page
         }
     }
 
-    private void GoToQuestion(object sender, RoutedEventArgs e)
+    public static void GoToQuestion(object sender, RoutedEventArgs e)
     {
-        var btn = (Button)sender;
+
+        Button btn = (Button)sender;
+        Console.WriteLine(btn.Background.GetValue(SolidColorBrush.ColorProperty));
         if (App.MASTER_MODE)
         {
-            // Handle master mode logic here
             Console.WriteLine($"Master mode: Button {btn.Name} clicked.");
-            _ = ((Frame)Window.Current.Content).Navigate(typeof(QuestionPage));
+            Storyboard storyboard = QuestionBtnDeactivate(sender);
+            storyboard.Completed += (s, args) =>
+            {
+                _ = ((Frame)Window.Current.Content).Navigate(typeof(QuestionPage));
+            };
+            storyboard.Begin();
+
         }
         else
         {
-            // Handle mirror mode logic here
             Console.WriteLine("You can't click buttons in mirror mode.");
         }
     }
