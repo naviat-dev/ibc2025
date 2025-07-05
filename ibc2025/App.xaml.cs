@@ -38,11 +38,6 @@ public partial class App : Application
         Start();
     }
 
-    private void OnSuspending(object sender, SuspendingEventArgs e)
-    {
-        Task.Run(() => MirrorServer.MirrorShutdown());
-    }
-
     protected Window? MainWindow { get; private set; }
 
     protected override void OnLaunched(LaunchActivatedEventArgs args)
