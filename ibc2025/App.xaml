@@ -14,7 +14,7 @@
 					Value="Bahnschrift"/>
 		</Style>
 		<Style x:Key="AnimatedOutlineButton"
-				TargetType="Button">
+			   TargetType="Button">
 			<Setter Property="BorderBrush"
 					Value="Transparent"/>
 			<Setter Property="BorderThickness"
@@ -46,7 +46,7 @@
 															Duration="0:0:0.2">
 											<ThicknessAnimation.EasingFunction>
 												<ExponentialEase EasingMode="EaseOut"
-														Exponent="4"/>
+																 Exponent="4"/>
 											</ThicknessAnimation.EasingFunction>
 										</ThicknessAnimation>
 										<ColorAnimation Storyboard.TargetName="border"
@@ -55,7 +55,7 @@
 														Duration="0:0:0.2">
 											<ColorAnimation.EasingFunction>
 												<ExponentialEase EasingMode="EaseOut"
-														Exponent="4"/>
+																 Exponent="4"/>
 											</ColorAnimation.EasingFunction>
 										</ColorAnimation>
 									</Storyboard>
