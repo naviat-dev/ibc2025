@@ -14,7 +14,7 @@ public sealed partial class MainPage : Page
 
     private void StartMaster(object sender, RoutedEventArgs e)
     {
-        App.MASTER_MODE = true;
+        App.MasterMode = true;
         Storyboard storyboard = App.SlideOutAnimation("X", TimeSpan.FromSeconds(0.5), RootGrid, MainTransform);
         storyboard.Completed += (s, args) =>
         {
@@ -25,7 +25,7 @@ public sealed partial class MainPage : Page
 
     private void StartMirror(object sender, RoutedEventArgs e)
     {
-        App.MASTER_MODE = false;
+        App.MasterMode = false;
         Storyboard storyboard = App.SlideOutAnimation("X", TimeSpan.FromSeconds(0.5), RootGrid, MainTransform);
         storyboard.Completed += (s, args) =>
         {

@@ -8,15 +8,65 @@
 				<!-- Load WinUI resources -->
 				<XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls"/>
 			</ResourceDictionary.MergedDictionaries>
-
-			<!-- Add resources here -->
-
 		</ResourceDictionary>
-	</Application.Resources>
-	<Application.Resources>
 		<Style TargetType="Control">
 			<Setter Property="FontFamily"
 					Value="Bahnschrift"/>
+		</Style>
+		<Style x:Key="AnimatedOutlineButton"
+				TargetType="Button">
+			<Setter Property="BorderBrush"
+					Value="Transparent"/>
+			<Setter Property="BorderThickness"
+					Value="2"/>
+			<Setter Property="Background"
+					Value="#0F323232"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Grid>
+							<Border x:Name="border"
+									Background="{TemplateBinding Background}"
+									BorderBrush="{TemplateBinding BorderBrush}"
+									BorderThickness="{TemplateBinding BorderThickness}"
+									CornerRadius="4">
+								<ContentPresenter
+									HorizontalAlignment="Center"
+									VerticalAlignment="Center"/>
+							</Border>
+						</Grid>
+						<VisualStateManager.VisualStateGroups>
+							<VisualStateGroup x:Name="CommonStates">
+								<VisualState x:Name="Normal"/>
+								<VisualState x:Name="PointerOver">
+									<Storyboard>
+										<ThicknessAnimation Storyboard.TargetName="border"
+															Storyboard.TargetProperty="BorderThickness"
+															To="6"
+															Duration="0:0:0.2">
+											<ThicknessAnimation.EasingFunction>
+												<ExponentialEase EasingMode="EaseOut"
+														Exponent="4"/>
+											</ThicknessAnimation.EasingFunction>
+										</ThicknessAnimation>
+										<ColorAnimation Storyboard.TargetName="border"
+														Storyboard.TargetProperty="BorderBrush.Color"
+														To="White"
+														Duration="0:0:0.2">
+											<ColorAnimation.EasingFunction>
+												<ExponentialEase EasingMode="EaseOut"
+														Exponent="4"/>
+											</ColorAnimation.EasingFunction>
+										</ColorAnimation>
+									</Storyboard>
+								</VisualState>
+								<VisualState x:Name="Pressed"/>
+								<VisualState x:Name="Disabled"/>
+							</VisualStateGroup>
+						</VisualStateManager.VisualStateGroups>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
 		</Style>
 	</Application.Resources>
 

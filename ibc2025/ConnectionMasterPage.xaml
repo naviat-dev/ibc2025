@@ -1,0 +1,22 @@
+<Page x:Class="ibc2025.ConnectionMasterPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:ibc2025"
+      x:Name="PageBackground">
+    <Grid x:Name="RootGrid"
+          HorizontalAlignment="Stretch"
+          VerticalAlignment="Stretch">
+        <Grid.RenderTransform>
+            <TranslateTransform x:Name="MainTransform"/>
+        </Grid.RenderTransform>
+        <StackPanel
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+            <TextBlock
+                Text="Searching for available mirror applications..."
+                FontSize="50"
+                FontFamily="Bahnschrift"
+                HorizontalAlignment="Center"/>
+        </StackPanel>
+    </Grid>
+</Page>

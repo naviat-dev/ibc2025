@@ -8,6 +8,8 @@
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
+    <PackageVersion Include="Firebase.Database" Version="1.0.0" />
+    <PackageVersion Include="FirebaseDatabase.net" Version="5.0.0" />
     <PackageVersion Include="Microsoft.AspNetCore.App" Version="2.2.8" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.5" />
   </ItemGroup>

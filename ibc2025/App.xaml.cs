@@ -1,17 +1,26 @@
+using Firebase.Database;
 using Microsoft.UI.Xaml.Media.Animation;
-using Uno.Extensions.Specialized;
 using Uno.Resizetizer;
 
 namespace ibc2025;
 
 public partial class App : Application
 {
-    public List<Question> Questions = [];
-    public static readonly int[] TeamPts = [0, 0, 0, 0, 0, 0, 0];
-    public static bool MASTER_MODE;
+    public static List<Question> Questions = [];
+    public static int ActiveQuestion = 0;
+    public static int[] TeamPts = [0, 0, 0, 0, 0, 0, 0];
+    public static int[] TeamPtsDsply = [0, 0, 0, 0, 0, 0, 0];
+    public static bool MasterMode;
     public static LinearGradientBrush DailyBackground;
-    public static DateTime date = DateTime.Today;
-    public readonly Dictionary<string, Action> _commands;
+    public static readonly DateTime Date = DateTime.Today;
+    public static readonly string DatabaseURL = "https://ibc2025-7bd8a-default-rtdb.firebaseio.com/";
+    public static readonly FirebaseClient Database = new(DatabaseURL);
+    public static readonly Dictionary<string, Action<(object, RoutedEventArgs)>> Commands = new()
+    {
+        { "QuestionBoardPage.GoToQuestion", t => QuestionBoardPage.GoToQuestion(t.Item1, t.Item2) },
+        { "QuestionBoardPage.RegionIncr", t => QuestionBoardPage.RegionIncr(t.Item1, t.Item2) },
+        { "QuestionBoardPage.RegionDecr", t => QuestionBoardPage.RegionDecr(t.Item1, t.Item2) }
+    };
 
     /// <summary>
     /// Initializes the singleton application object. This is the first line of authored code
@@ -20,7 +29,18 @@ public partial class App : Application
     public App()
     {
         InitializeComponent();
+        Suspending += (s, e) =>
+        {
+            Console.WriteLine("Shutting down...");
+            var task = MirrorServer.MirrorShutdown();
+            task.Wait(TimeSpan.FromSeconds(3));
+        };
         Start();
+    }
+
+    private void OnSuspending(object sender, SuspendingEventArgs e)
+    {
+        Task.Run(() => MirrorServer.MirrorShutdown());
     }
 
     protected Window? MainWindow { get; private set; }
@@ -148,12 +168,12 @@ public partial class App : Application
             StartPoint = new Windows.Foundation.Point(0, 0),
             EndPoint = new Windows.Foundation.Point(1, 1)
         };
-        if (date.ToString().Split(" ")[0] == "7/17/2025")
+        if (Date.ToString().Split(" ")[0] == "7/17/2025")
         {
             DailyBackground.GradientStops.Add(new GradientStop { Color = Windows.UI.Color.FromArgb(255, 25, 48, 115), Offset = 0 });
             DailyBackground.GradientStops.Add(new GradientStop { Color = Windows.UI.Color.FromArgb(255, 39, 20, 82), Offset = 1 });
         }
-        else if (date.ToString().Split(" ")[0] == "7/18/2025")
+        else if (Date.ToString().Split(" ")[0] == "7/18/2025")
         {
             for (int i = 0; i < 70; i++)
             {
@@ -162,7 +182,7 @@ public partial class App : Application
             DailyBackground.GradientStops.Add(new GradientStop { Color = Windows.UI.Color.FromArgb(255, 39, 20, 82), Offset = 0 });
             DailyBackground.GradientStops.Add(new GradientStop { Color = Windows.UI.Color.FromArgb(255, 8, 62, 71), Offset = 1 });
         }
-        else if (date.ToString().Split(" ")[0] == "6/30/2025")
+        else if (Date.ToString().Split(" ")[0] == "6/30/2025")
         {
             for (int i = 0; i < 140; i++)
             {
