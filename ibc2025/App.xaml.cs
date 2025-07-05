@@ -15,12 +15,6 @@ public partial class App : Application
     public static readonly DateTime Date = DateTime.Today;
     public static readonly string DatabaseURL = "https://ibc2025-7bd8a-default-rtdb.firebaseio.com/";
     public static readonly FirebaseClient Database = new(DatabaseURL);
-    public static readonly Dictionary<string, Action<(object, RoutedEventArgs)>> Commands = new()
-    {
-        { "QuestionBoardPage.GoToQuestion", t => QuestionBoardPage.GoToQuestion(t.Item1, t.Item2) },
-        { "QuestionBoardPage.RegionIncr", t => QuestionBoardPage.RegionIncr(t.Item1, t.Item2) },
-        { "QuestionBoardPage.RegionDecr", t => QuestionBoardPage.RegionDecr(t.Item1, t.Item2) }
-    };
 
     /// <summary>
     /// Initializes the singleton application object. This is the first line of authored code

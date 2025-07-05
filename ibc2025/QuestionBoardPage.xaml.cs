@@ -17,6 +17,11 @@ public sealed partial class QuestionBoardPage : Page
 		RegionCEWatcher();
 		RegionCWWatcher();
 		RegionCSWatcher();
+		MirrorServer.QuestionBoardCommandChanged += () =>
+		{
+			string[] command = MirrorServer.LastCommand.Split(":");
+			_ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => MirrorServer.Commands[command[0]]((PageBackground.FindName(command[1]), new RoutedEventArgs())));
+		};
 	}
 
 	// Example: Fill a Grid with Buttons (assume you have a Grid named "MyGrid" in XAML)

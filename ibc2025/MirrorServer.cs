@@ -7,15 +7,30 @@ public class MirrorServer
 	public static string MirrorId;
 	private static bool runCommand = true;
 	public static event Action MirrorAvailabilityChanged;
-	public static event Action MirrorCommandChanged;
+	public static event Action QuestionBoardCommandChanged;
+	public static event Action QuestionCommandChanged;
+	public static string LastCommand;
+    public static readonly Dictionary<string, Action<(object, RoutedEventArgs)>> Commands = new()
+    {
+        { "QuestionBoardPage.GoToQuestion", t => QuestionBoardPage.GoToQuestion(t.Item1, t.Item2) },
+        { "QuestionBoardPage.RegionIncr", t => QuestionBoardPage.RegionIncr(t.Item1, t.Item2) },
+        { "QuestionBoardPage.RegionDecr", t => QuestionBoardPage.RegionDecr(t.Item1, t.Item2) }
+    };
 
 	public static void Execute(string name)
 	{
-		if (App.Commands.TryGetValue(name, out var action))
+		if (Commands.ContainsKey(name.Split(":")[0]))
 		{
-
+			LastCommand = name;
+			if (name.StartsWith("QuestionBoard"))
+			{
+				QuestionBoardCommandChanged.Invoke();
+			}
+			else if (name.StartsWith("Question"))
+			{
+				QuestionCommandChanged.Invoke();
+			}
 		}
-		// action();
 		else
 			Console.WriteLine($"[Mirror] Unknown command: {name}");
 	}
@@ -54,7 +69,7 @@ public class MirrorServer
 				Console.WriteLine(bool.Parse(ping.Object));
 				if (!bool.Parse(ping.Object))
 				{
-					MirrorAvailabilityChanged?.Invoke();
+					MirrorAvailabilityChanged.Invoke();
 					ListenForPings();
 				}
 			}
