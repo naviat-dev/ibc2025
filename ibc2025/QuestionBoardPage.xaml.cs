@@ -63,39 +63,37 @@ public sealed partial class QuestionBoardPage : Page
 
 	public static void GoToQuestion(object sender, RoutedEventArgs e)
 	{
-		MasterServer.SendPingToMirror("VICTORY", "QuestionBoardPage.GoToQuestion", sender.GetValue(NameProperty).ToString());
 		App.ActiveQuestion = int.Parse(sender.GetValue(NameProperty).ToString()[1..]);
 		App.Questions[int.Parse(sender.GetValue(NameProperty).ToString()[1..]) - 1].Used = true;
 		Button btn = (Button)sender;
-		Console.WriteLine(btn.Background.GetValue(SolidColorBrush.ColorProperty));
 		if (App.MasterMode)
 		{
+			MasterServer.SendPingToMirror("VICTORY", "QuestionBoardPage.GoToQuestion", sender.GetValue(NameProperty).ToString());
 			Console.WriteLine($"Master mode: Button {btn.Name} clicked.");
-			DependencyObject parent = btn;
-			QuestionBoardPage page = null;
-			while (parent != null && page == null)
-			{
-				parent = VisualTreeHelper.GetParent(parent);
-				page = parent as QuestionBoardPage;
-			}
-
-			Storyboard storyboard = QuestionBtnDeactivate(sender);
-			storyboard.Completed += (s, args) =>
-			{
-				Storyboard storyboard = App.SlideOutAnimation("X", TimeSpan.FromSeconds(0.5), page.RootGrid, page.MainTransform);
-				storyboard.Completed += (s2, args2) =>
-				{
-					_ = ((Frame)Window.Current.Content).Navigate(typeof(QuestionPage));
-				};
-				storyboard.Begin();
-			};
-			storyboard.Begin();
-
 		}
 		else
 		{
-			Console.WriteLine("You can't click buttons in mirror mode.");
+			Console.WriteLine($"Mirror mode: Button {btn.Name} clicked.");
 		}
+		DependencyObject parent = btn;
+		QuestionBoardPage page = null;
+		while (parent != null && page == null)
+		{
+			parent = VisualTreeHelper.GetParent(parent);
+			page = parent as QuestionBoardPage;
+		}
+
+		Storyboard storyboard = QuestionBtnDeactivate(sender);
+		storyboard.Completed += (s, args) =>
+		{
+			Storyboard storyboard = App.SlideOutAnimation("X", TimeSpan.FromSeconds(0.5), page.RootGrid, page.MainTransform);
+			storyboard.Completed += (s2, args2) =>
+			{
+				_ = ((Frame)Window.Current.Content).Navigate(typeof(QuestionPage));
+			};
+			storyboard.Begin();
+		};
+		storyboard.Begin();
 	}
 
 	private void RegionIncrWrapper(object sender, RoutedEventArgs e)
@@ -105,7 +103,10 @@ public sealed partial class QuestionBoardPage : Page
 
 	public static void RegionIncr(object sender, RoutedEventArgs e)
 	{
-		MasterServer.SendPingToMirror("VICTORY", "QuestionBoardPage.RegionIncr", sender.GetValue(NameProperty).ToString());
+		if (App.MasterMode)
+		{
+			MasterServer.SendPingToMirror("VICTORY", "QuestionBoardPage.RegionIncr", sender.GetValue(NameProperty).ToString());	
+		}
 		string region = sender.GetValue(NameProperty).ToString()[..7].Replace("Region", "");
 		App.TeamPts[int.Parse(region) - 1] += 100;
 	}
@@ -117,7 +118,10 @@ public sealed partial class QuestionBoardPage : Page
 
 	public static void RegionDecr(object sender, RoutedEventArgs e)
 	{
-		MasterServer.SendPingToMirror("VICTORY", "QuestionBoardPage.RegionDecr", sender.GetValue(NameProperty).ToString());
+		if (App.MasterMode)
+		{
+			MasterServer.SendPingToMirror("VICTORY", "QuestionBoardPage.RegionDecr", sender.GetValue(NameProperty).ToString());	
+		}
 		string region = sender.GetValue(NameProperty).ToString()[..7].Replace("Region", "");
 		App.TeamPts[int.Parse(region) - 1] -= 100;
 	}
