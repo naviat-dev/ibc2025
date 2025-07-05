@@ -171,7 +171,7 @@ public sealed partial class QuestionBoardPage : Page
 				for (int i = 0; i < 100; i++)
 				{
 					App.TeamPtsDsply[1] += App.TeamPtsDsply[1] < App.TeamPts[1] ? 1 : -1;
-					// Region2Pts.Text = App.TeamPtsDsply[1].ToString();
+					Region2Pts.Text = App.TeamPtsDsply[1].ToString();
 					await Task.Delay(5);
 				}
 			}
@@ -191,7 +191,7 @@ public sealed partial class QuestionBoardPage : Page
 				for (int i = 0; i < 100; i++)
 				{
 					App.TeamPtsDsply[2] += App.TeamPtsDsply[2] < App.TeamPts[2] ? 1 : -1;
-					// Region3Pts.Text = App.TeamPtsDsply[2].ToString();
+					Region3Pts.Text = App.TeamPtsDsply[2].ToString();
 					await Task.Delay(5);
 				}
 			}
@@ -211,7 +211,7 @@ public sealed partial class QuestionBoardPage : Page
 				for (int i = 0; i < 100; i++)
 				{
 					App.TeamPtsDsply[3] += App.TeamPtsDsply[3] < App.TeamPts[3] ? 1 : -1;
-					// Region4Pts.Text = App.TeamPtsDsply[3].ToString();
+					Region4Pts.Text = App.TeamPtsDsply[3].ToString();
 					await Task.Delay(5);
 				}
 			}
@@ -231,7 +231,7 @@ public sealed partial class QuestionBoardPage : Page
 				for (int i = 0; i < 100; i++)
 				{
 					App.TeamPtsDsply[4] += App.TeamPtsDsply[4] < App.TeamPts[4] ? 1 : -1;
-					// Region5Pts.Text = App.TeamPtsDsply[4].ToString();
+					Region5Pts.Text = App.TeamPtsDsply[4].ToString();
 					await Task.Delay(5);
 				}
 			}
@@ -251,7 +251,7 @@ public sealed partial class QuestionBoardPage : Page
 				for (int i = 0; i < 100; i++)
 				{
 					App.TeamPtsDsply[5] += App.TeamPtsDsply[5] < App.TeamPts[5] ? 1 : -1;
-					// Region6Pts.Text = App.TeamPtsDsply[5].ToString();
+					Region6Pts.Text = App.TeamPtsDsply[5].ToString();
 					await Task.Delay(5);
 				}
 			}
@@ -271,7 +271,7 @@ public sealed partial class QuestionBoardPage : Page
 				for (int i = 0; i < 100; i++)
 				{
 					App.TeamPtsDsply[6] += App.TeamPtsDsply[6] < App.TeamPts[6] ? 1 : -1;
-					// Region7Pts.Text = App.TeamPtsDsply[6].ToString();
+					Region7Pts.Text = App.TeamPtsDsply[6].ToString();
 					await Task.Delay(5);
 				}
 			}
