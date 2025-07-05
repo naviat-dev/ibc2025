@@ -60,7 +60,7 @@ public sealed partial class QuestionBoardPage : Page
 	{
 		MasterServer.SendPingToMirror("VICTORY", "QuestionBoardPage.GoToQuestion", sender.GetValue(NameProperty).ToString());
 		App.ActiveQuestion = int.Parse(sender.GetValue(NameProperty).ToString()[1..]);
-		App.Questions[int.Parse(sender.GetValue(NameProperty).ToString()[1..])].Used = true;
+		App.Questions[int.Parse(sender.GetValue(NameProperty).ToString()[1..]) - 1].Used = true;
 		Button btn = (Button)sender;
 		Console.WriteLine(btn.Background.GetValue(SolidColorBrush.ColorProperty));
 		if (App.MasterMode)

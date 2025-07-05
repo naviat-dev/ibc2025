@@ -6,7 +6,7 @@ public sealed partial class QuestionPage : Page
     {
         InitializeComponent();
         PageBackground.Background = App.DailyBackground;
-        QuestionHeader.SetValue(TextBlock.TextProperty, "Question " + (App.ActiveQuestion - 1));
+        QuestionHeader.SetValue(TextBlock.TextProperty, "Question " + App.ActiveQuestion);
         QuestionText.SetValue(TextBlock.TextProperty, App.Questions[App.ActiveQuestion - 1].QuestionText);
         TempBackBtn.Click += (s, e) =>
         {
