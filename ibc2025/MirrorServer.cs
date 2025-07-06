@@ -1,3 +1,6 @@
+using System.Net.NetworkInformation;
+using System.Security.Cryptography;
+using System.Text;
 using Firebase.Database.Query;
 
 namespace ibc2025;
@@ -16,6 +19,23 @@ public class MirrorServer
         { "QuestionBoardPage.RegionIncr", t => QuestionBoardPage.RegionIncr(t.Item1, t.Item2) },
         { "QuestionBoardPage.RegionDecr", t => QuestionBoardPage.RegionDecr(t.Item1, t.Item2) }
     };
+
+	private static string GetHashedMachineIdentifier()
+    {
+        // Get machine name and user name
+        string machineName = Environment.MachineName;
+        string userName = Environment.UserName;
+
+        // Get primary MAC address
+        string macAddress = NetworkInterface.GetAllNetworkInterfaces().FirstOrDefault(n => n.NetworkInterfaceType != NetworkInterfaceType.Loopback && n.OperationalStatus == OperationalStatus.Up && !n.Description.Contains("virtual", StringComparison.CurrentCultureIgnoreCase) && !n.Name.Contains("virtual", StringComparison.CurrentCultureIgnoreCase))?.GetPhysicalAddress().ToString() ?? "00:00:00:00:00:00";
+
+        // Combine identifiers
+        string rawId = $"{machineName}-{userName}-{macAddress}";
+
+        // Hash with SHA-256
+        byte[] hashBytes = SHA256.HashData(Encoding.UTF8.GetBytes(rawId));
+        return Convert.ToHexString(hashBytes); // returns uppercase hex string
+    }
 
 	public static void Execute(string name)
 	{
@@ -58,10 +78,10 @@ public class MirrorServer
 
 	public static async Task MirrorInit()
 	{
-		MirrorId = Environment.MachineName;
+		MirrorId = GetHashedMachineIdentifier();
+		await App.Database.Child("mirrors").Child(MirrorId).Child("name").PutAsync(Environment.MachineName);
 		await App.Database.Child("mirrors").Child(MirrorId).Child("available").PutAsync(true);
 		await App.Database.Child("mirrors").Child(MirrorId).Child("command").PutAsync("");
-		await App.Database.Child("mirrors").Child(MirrorId).Child("lastSeen").PutAsync(DateTimeOffset.UtcNow.ToUnixTimeSeconds());
 		App.Database.Child("mirrors").Child(MirrorId).AsObservable<string>().Subscribe(async ping =>
 		{
 			if (ping.Key == "available" && !string.IsNullOrWhiteSpace(ping.Object))
