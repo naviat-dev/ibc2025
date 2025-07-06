@@ -10,6 +10,13 @@ public sealed partial class QuestionBoardPage : Page
 		PageBackground.Background = App.DailyBackground;
 		App.SlideInAnimation("X", TimeSpan.FromSeconds(0.5), RootGrid, MainTransform);
 		FillGridWithButtons(QuestionBoard);
+		Region1Pts.Text = App.TeamPtsDsply[0].ToString();
+		Region2Pts.Text = App.TeamPtsDsply[1].ToString();
+		Region3Pts.Text = App.TeamPtsDsply[2].ToString();
+		Region4Pts.Text = App.TeamPtsDsply[3].ToString();
+		Region5Pts.Text = App.TeamPtsDsply[4].ToString();
+		Region6Pts.Text = App.TeamPtsDsply[5].ToString();
+		Region7Pts.Text = App.TeamPtsDsply[6].ToString();
 		Region1Watcher();
 		Region2Watcher();
 		Region3Watcher();
