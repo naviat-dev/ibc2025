@@ -21,7 +21,7 @@ internal class DebugHttpHandler : DelegatingHandler
                 Console.Error.WriteLine($"{request.RequestUri} ({request.Method})");
             }
 
-            foreach ((var key, var values) in request.Headers.ToDictionary(x => x.Key, x => string.Join(", ", x.Value)))
+            foreach ((var key, var values) in request.Headers.ToDictionary(static x => x.Key, static x => string.Join(", ", x.Value)))
             {
                 Console.Error.WriteLine($"  {key}: {values}");
             }

@@ -9,7 +9,7 @@ internal class Program
         App.InitializeLogging();
 
         var host = UnoPlatformHostBuilder.Create()
-            .App(() => new App())
+            .App(static () => new App())
             .UseX11()
             .UseLinuxFrameBuffer()
             .UseMacOS()

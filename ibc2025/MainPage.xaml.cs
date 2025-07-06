@@ -16,7 +16,7 @@ public sealed partial class MainPage : Page
     {
         App.MasterMode = true;
         Storyboard storyboard = App.SlideOutAnimation("X", TimeSpan.FromSeconds(0.5), RootGrid, MainTransform);
-        storyboard.Completed += (s, args) =>
+        storyboard.Completed += static (s, args) =>
         {
             _ = ((Frame)Window.Current.Content).Navigate(typeof(QuestionBoardPage));
         };
@@ -27,7 +27,7 @@ public sealed partial class MainPage : Page
     {
         App.MasterMode = false;
         Storyboard storyboard = App.SlideOutAnimation("X", TimeSpan.FromSeconds(0.5), RootGrid, MainTransform);
-        storyboard.Completed += (s, args) =>
+        storyboard.Completed += static (s, args) =>
         {
             _ = ((Frame)Window.Current.Content).Navigate(typeof(ConnectionMirrorPage));
         };

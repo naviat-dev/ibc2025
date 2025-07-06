@@ -20,7 +20,7 @@ public partial class ConnectionMirrorPage : Page
     private void GoToMain(object sender, RoutedEventArgs e)
     {
         Storyboard storyboard = App.SlideOutAnimation("X", TimeSpan.FromSeconds(0.5), RootGrid, MainTransform);
-        storyboard.Completed += (s, args) =>
+        storyboard.Completed += static (s, args) =>
         {
             _ = ((Frame)Window.Current.Content).Navigate(typeof(MainPage));
         };
@@ -30,7 +30,7 @@ public partial class ConnectionMirrorPage : Page
     public void GoToQuestionBoard()
     {
         Storyboard storyboard = App.SlideOutAnimation("X", TimeSpan.FromSeconds(0.5), RootGrid, MainTransform);
-        storyboard.Completed += (s, args) =>
+        storyboard.Completed += static (s, args) =>
         {
             _ = ((Frame)Window.Current.Content).Navigate(typeof(QuestionBoardPage));
         };

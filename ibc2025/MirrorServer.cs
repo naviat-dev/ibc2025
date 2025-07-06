@@ -15,9 +15,9 @@ public class MirrorServer
 	public static string LastCommand;
     public static readonly Dictionary<string, Action<(object, RoutedEventArgs)>> Commands = new()
     {
-        { "QuestionBoardPage.GoToQuestion", t => QuestionBoardPage.GoToQuestion(t.Item1, t.Item2) },
-        { "QuestionBoardPage.RegionIncr", t => QuestionBoardPage.RegionIncr(t.Item1, t.Item2) },
-        { "QuestionBoardPage.RegionDecr", t => QuestionBoardPage.RegionDecr(t.Item1, t.Item2) }
+        { "QuestionBoardPage.GoToQuestion", static t => QuestionBoardPage.GoToQuestion(t.Item1, t.Item2) },
+        { "QuestionBoardPage.RegionIncr", static t => QuestionBoardPage.RegionIncr(t.Item1, t.Item2) },
+        { "QuestionBoardPage.RegionDecr", static t => QuestionBoardPage.RegionDecr(t.Item1, t.Item2) }
     };
 
 	private static string GetHashedMachineIdentifier()
@@ -27,7 +27,7 @@ public class MirrorServer
         string userName = Environment.UserName;
 
         // Get primary MAC address
-        string macAddress = NetworkInterface.GetAllNetworkInterfaces().FirstOrDefault(n => n.NetworkInterfaceType != NetworkInterfaceType.Loopback && n.OperationalStatus == OperationalStatus.Up && !n.Description.Contains("virtual", StringComparison.CurrentCultureIgnoreCase) && !n.Name.Contains("virtual", StringComparison.CurrentCultureIgnoreCase))?.GetPhysicalAddress().ToString() ?? "00:00:00:00:00:00";
+        string macAddress = NetworkInterface.GetAllNetworkInterfaces().FirstOrDefault(static n => n.NetworkInterfaceType != NetworkInterfaceType.Loopback && n.OperationalStatus == OperationalStatus.Up && !n.Description.Contains("virtual", StringComparison.CurrentCultureIgnoreCase) && !n.Name.Contains("virtual", StringComparison.CurrentCultureIgnoreCase))?.GetPhysicalAddress().ToString() ?? "00:00:00:00:00:00";
 
         // Combine identifiers
         string rawId = $"{machineName}-{userName}-{macAddress}";
@@ -57,7 +57,7 @@ public class MirrorServer
 
 	public static void ListenForPings()
 	{
-		App.Database.Child("mirrors").Child(MirrorId).AsObservable<string>().Subscribe(async ping =>
+		App.Database.Child("mirrors").Child(MirrorId).AsObservable<string>().Subscribe(static async ping =>
 		{
 			if (ping.Key == "command" && !string.IsNullOrWhiteSpace(ping.Object))
 			{
@@ -82,7 +82,7 @@ public class MirrorServer
 		await App.Database.Child("mirrors").Child(MirrorId).Child("name").PutAsync(Environment.MachineName);
 		await App.Database.Child("mirrors").Child(MirrorId).Child("available").PutAsync(true);
 		await App.Database.Child("mirrors").Child(MirrorId).Child("command").PutAsync("");
-		App.Database.Child("mirrors").Child(MirrorId).AsObservable<string>().Subscribe(async ping =>
+		App.Database.Child("mirrors").Child(MirrorId).AsObservable<string>().Subscribe(static async ping =>
 		{
 			if (ping.Key == "available" && !string.IsNullOrWhiteSpace(ping.Object))
 			{

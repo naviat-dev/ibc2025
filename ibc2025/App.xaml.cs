@@ -23,7 +23,7 @@ public partial class App : Application
     public App()
     {
         InitializeComponent();
-        Suspending += (s, e) =>
+        Suspending += static (s, e) =>
         {
             Console.WriteLine("Shutting down...");
             Task task = MasterMode ? MasterServer.MasterShutdown() : MirrorServer.MirrorShutdown();
@@ -91,7 +91,7 @@ public partial class App : Application
         //
         // For more performance documentation: https://platform.uno/docs/articles/Uno-UI-Performance.html
 
-        var factory = LoggerFactory.Create(builder =>
+        var factory = LoggerFactory.Create(static builder =>
         {
 #if __WASM__
             builder.AddProvider(new global::Uno.Extensions.Logging.WebAssembly.WebAssemblyConsoleLoggerProvider());
