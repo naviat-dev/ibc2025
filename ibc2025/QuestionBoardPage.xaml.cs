@@ -269,9 +269,9 @@ public sealed partial class QuestionBoardPage : Page
 		{
 			if (App.TeamPtsDsply[0] != App.TeamPts[0])
 			{
-				for (int i = 0; i < 100; i++)
+				for (int i = 0; i < 50; i++)
 				{
-					App.TeamPtsDsply[0] += App.TeamPtsDsply[0] < App.TeamPts[0] ? 1 : -1;
+					App.TeamPtsDsply[0] += App.TeamPtsDsply[0] < App.TeamPts[0] ? 2 : -2;
 					Region1Pts.Text = App.TeamPtsDsply[0].ToString();
 					await Task.Delay(5);
 				}
@@ -289,9 +289,9 @@ public sealed partial class QuestionBoardPage : Page
 		{
 			if (App.TeamPtsDsply[1] != App.TeamPts[1])
 			{
-				for (int i = 0; i < 100; i++)
+				for (int i = 0; i < 50; i++)
 				{
-					App.TeamPtsDsply[1] += App.TeamPtsDsply[1] < App.TeamPts[1] ? 1 : -1;
+					App.TeamPtsDsply[1] += App.TeamPtsDsply[1] < App.TeamPts[1] ? 2 : -2;
 					Region2Pts.Text = App.TeamPtsDsply[1].ToString();
 					await Task.Delay(5);
 				}
@@ -309,9 +309,9 @@ public sealed partial class QuestionBoardPage : Page
 		{
 			if (App.TeamPtsDsply[2] != App.TeamPts[2])
 			{
-				for (int i = 0; i < 100; i++)
+				for (int i = 0; i < 50; i++)
 				{
-					App.TeamPtsDsply[2] += App.TeamPtsDsply[2] < App.TeamPts[2] ? 1 : -1;
+					App.TeamPtsDsply[2] += App.TeamPtsDsply[2] < App.TeamPts[2] ? 2 : -2;
 					Region3Pts.Text = App.TeamPtsDsply[2].ToString();
 					await Task.Delay(5);
 				}
@@ -329,9 +329,9 @@ public sealed partial class QuestionBoardPage : Page
 		{
 			if (App.TeamPtsDsply[3] != App.TeamPts[3])
 			{
-				for (int i = 0; i < 100; i++)
+				for (int i = 0; i < 50; i++)
 				{
-					App.TeamPtsDsply[3] += App.TeamPtsDsply[3] < App.TeamPts[3] ? 1 : -1;
+					App.TeamPtsDsply[3] += App.TeamPtsDsply[3] < App.TeamPts[3] ? 2 : -2;
 					Region4Pts.Text = App.TeamPtsDsply[3].ToString();
 					await Task.Delay(5);
 				}
@@ -349,9 +349,9 @@ public sealed partial class QuestionBoardPage : Page
 		{
 			if (App.TeamPtsDsply[4] != App.TeamPts[4])
 			{
-				for (int i = 0; i < 100; i++)
+				for (int i = 0; i < 50; i++)
 				{
-					App.TeamPtsDsply[4] += App.TeamPtsDsply[4] < App.TeamPts[4] ? 1 : -1;
+					App.TeamPtsDsply[4] += App.TeamPtsDsply[4] < App.TeamPts[4] ? 2 : -2;
 					Region5Pts.Text = App.TeamPtsDsply[4].ToString();
 					await Task.Delay(5);
 				}
@@ -369,9 +369,9 @@ public sealed partial class QuestionBoardPage : Page
 		{
 			if (App.TeamPtsDsply[5] != App.TeamPts[5])
 			{
-				for (int i = 0; i < 100; i++)
+				for (int i = 0; i < 50; i++)
 				{
-					App.TeamPtsDsply[5] += App.TeamPtsDsply[5] < App.TeamPts[5] ? 1 : -1;
+					App.TeamPtsDsply[5] += App.TeamPtsDsply[5] < App.TeamPts[5] ? 2 : -2;
 					Region6Pts.Text = App.TeamPtsDsply[5].ToString();
 					await Task.Delay(5);
 				}
@@ -389,9 +389,9 @@ public sealed partial class QuestionBoardPage : Page
 		{
 			if (App.TeamPtsDsply[6] != App.TeamPts[6])
 			{
-				for (int i = 0; i < 100; i++)
+				for (int i = 0; i < 50; i++)
 				{
-					App.TeamPtsDsply[6] += App.TeamPtsDsply[6] < App.TeamPts[6] ? 1 : -1;
+					App.TeamPtsDsply[6] += App.TeamPtsDsply[6] < App.TeamPts[6] ? 2 : -2;
 					Region7Pts.Text = App.TeamPtsDsply[6].ToString();
 					await Task.Delay(5);
 				}
