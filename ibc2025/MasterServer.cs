@@ -6,19 +6,16 @@ namespace ibc2025;
 
 public class MasterServer
 {
-    public static async Task MirrorDiscover()
-    {
+    public static string MirrorName;
 
+    public static async Task<(List<string> mirrorIds, List<string> mirrorNames)> MirrorDiscover()
+    {
         var result = await App.Database.Child("mirrors").OnceAsync<object>(); // Gets root-level data
-        Dictionary<string, object> mirrors = result.ToDictionary(x => x.Key, x => x.Object);
+        Dictionary<string, object> mirrors = result.ToDictionary(static x => x.Key, static x => x.Object);
         JObject db = JObject.Parse(JsonConvert.SerializeObject(result.ToDictionary(x => x.Key, x => x.Object), Formatting.Indented));
-        // Get all top-level keys (mirror IDs) in the "mirrors" directory
-        var mirrorIds = db.Properties().Select(p => p.Name).ToList();
-        Console.WriteLine("Mirror IDs:");
-        foreach (var id in mirrorIds)
-        {
-            Console.WriteLine(id);
-        }
+        List<string> mirrorIds = [.. db.Properties().Select(p => p.Name)];
+        List<string> mirrorNames = [.. mirrors.Values.Select(static m => (m as JObject)?["name"]?.ToString() ?? (m is IDictionary<string, object> dict && dict.TryGetValue("name", out object? value) ? value?.ToString() : null)).Where(static name => !string.IsNullOrEmpty(name))];
+        return (mirrorIds, mirrorNames);
     }
 
     public static async Task SendPingToMirror(string mirrorId, string method, string sender)
@@ -34,5 +31,4 @@ public class MasterServer
             await App.Database.Child("mirrors").Child(MirrorName).Child("available").PutAsync(true);
         }
     }
-
 }
