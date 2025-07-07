@@ -6,7 +6,7 @@ namespace ibc2025;
 
 public class MasterServer
 {
-    public static string MirrorName;
+    public static string MirrorId;
 
     public static async Task<(List<string> mirrorIds, List<string> mirrorNames)> MirrorDiscover()
     {
@@ -26,9 +26,9 @@ public class MasterServer
 
     public static async Task MasterShutdown()
     {
-        if (MirrorName != null)
+        if (MirrorId != null)
         {
-            await App.Database.Child("mirrors").Child(MirrorName).Child("available").PutAsync(true);
+            await App.Database.Child("mirrors").Child(MirrorId).Child("available").PutAsync(true);
         }
     }
 }

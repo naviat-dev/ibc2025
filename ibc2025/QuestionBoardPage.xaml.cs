@@ -75,7 +75,7 @@ public sealed partial class QuestionBoardPage : Page
 		Button btn = (Button)sender;
 		if (App.MasterMode)
 		{
-			MasterServer.SendPingToMirror("VICTORY", "QuestionBoardPage.GoToQuestion", sender.GetValue(NameProperty).ToString());
+			MasterServer.SendPingToMirror(MasterServer.MirrorId, "QuestionBoardPage.GoToQuestion", sender.GetValue(NameProperty).ToString());
 			Console.WriteLine($"Master mode: Button {btn.Name} clicked.");
 		}
 		else
@@ -110,14 +110,14 @@ public sealed partial class QuestionBoardPage : Page
 
 	public Storyboard RegionIncrColorIn(int region)
 	{
-		ColorAnimation startColorAnim = new ()
+		ColorAnimation startColorAnim = new()
 		{
 			From = Windows.UI.Color.FromArgb(0, 0, 128, 0),
 			To = Windows.UI.Color.FromArgb(255, 0, 128, 0),
 			Duration = TimeSpan.FromMilliseconds(500)
 		};
 
-		ColorAnimation endColorAnim = new ()
+		ColorAnimation endColorAnim = new()
 		{
 			From = Windows.UI.Color.FromArgb(0, 0, 255, 0),
 			To = Windows.UI.Color.FromArgb(255, 0, 255, 0),
@@ -139,14 +139,14 @@ public sealed partial class QuestionBoardPage : Page
 
 	public Storyboard RegionIncrColorOut(Page pageBackground, int region)
 	{
-		ColorAnimation startColorAnim = new ()
+		ColorAnimation startColorAnim = new()
 		{
 			From = Windows.UI.Color.FromArgb(255, 0, 128, 0),
 			To = Windows.UI.Color.FromArgb(0, 0, 128, 0),
 			Duration = TimeSpan.FromMilliseconds(500)
 		};
 
-		ColorAnimation endColorAnim = new ()
+		ColorAnimation endColorAnim = new()
 		{
 			From = Windows.UI.Color.FromArgb(255, 0, 255, 0),
 			To = Windows.UI.Color.FromArgb(0, 0, 255, 0),
@@ -170,7 +170,7 @@ public sealed partial class QuestionBoardPage : Page
 	{
 		if (App.MasterMode)
 		{
-			MasterServer.SendPingToMirror("VICTORY", "QuestionBoardPage.RegionIncr", sender.GetValue(NameProperty).ToString());
+			MasterServer.SendPingToMirror(MasterServer.MirrorId, "QuestionBoardPage.RegionIncr", sender.GetValue(NameProperty).ToString());
 		}
 		App.TeamPts[int.Parse(sender.GetValue(NameProperty).ToString()[..7].Replace("Region", "")) - 1] += 100;
 	}
@@ -182,14 +182,14 @@ public sealed partial class QuestionBoardPage : Page
 
 	public Storyboard RegionDecrColorIn(int region)
 	{
-		ColorAnimation startColorAnim = new ()
+		ColorAnimation startColorAnim = new()
 		{
 			From = Windows.UI.Color.FromArgb(0, 128, 0, 0),
 			To = Windows.UI.Color.FromArgb(255, 128, 0, 0),
 			Duration = TimeSpan.FromMilliseconds(500)
 		};
 
-		ColorAnimation endColorAnim = new ()
+		ColorAnimation endColorAnim = new()
 		{
 			From = Windows.UI.Color.FromArgb(0, 255, 0, 0),
 			To = Windows.UI.Color.FromArgb(255, 255, 0, 0),
@@ -211,14 +211,14 @@ public sealed partial class QuestionBoardPage : Page
 
 	public Storyboard RegionDecrColorOut(int region)
 	{
-		ColorAnimation startColorAnim = new ()
+		ColorAnimation startColorAnim = new()
 		{
 			From = Windows.UI.Color.FromArgb(255, 128, 0, 0),
 			To = Windows.UI.Color.FromArgb(0, 128, 0, 0),
 			Duration = TimeSpan.FromMilliseconds(500)
 		};
 
-		ColorAnimation endColorAnim = new ()
+		ColorAnimation endColorAnim = new()
 		{
 			From = Windows.UI.Color.FromArgb(255, 255, 0, 0),
 			To = Windows.UI.Color.FromArgb(0, 255, 0, 0),
@@ -242,7 +242,7 @@ public sealed partial class QuestionBoardPage : Page
 	{
 		if (App.MasterMode)
 		{
-			MasterServer.SendPingToMirror("VICTORY", "QuestionBoardPage.RegionDecr", sender.GetValue(NameProperty).ToString());
+			MasterServer.SendPingToMirror(MasterServer.MirrorId, "QuestionBoardPage.RegionDecr", sender.GetValue(NameProperty).ToString());
 		}
 		App.TeamPts[int.Parse(sender.GetValue(NameProperty).ToString()[..7].Replace("Region", "")) - 1] -= 100;
 	}

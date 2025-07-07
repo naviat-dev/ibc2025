@@ -9,14 +9,64 @@
         <Grid.RenderTransform>
             <TranslateTransform x:Name="MainTransform"/>
         </Grid.RenderTransform>
-        <StackPanel
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center">
+        <Grid
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
             <TextBlock
+                Grid.Row="0"
                 Text="Searching for available mirror applications..."
-                FontSize="50"
+                FontSize="35"
                 FontFamily="Bahnschrift"
-                HorizontalAlignment="Center"/>
-        </StackPanel>
+                HorizontalAlignment="Left"
+                Margin="50"/>
+            <ScrollViewer
+                Grid.Row="1"
+                VerticalScrollBarVisibility="Auto"
+                HorizontalScrollBarVisibility="Disabled"
+                Background="#0FFFFFFF"
+                Margin="50 0 50 0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch">
+                <Grid
+                    x:Name="MirrorList"
+                    HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </ScrollViewer>
+            <StackPanel
+                Grid.Row="2"
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                Margin="50">
+                <Button
+                    x:Name="ContinueBtn"
+                    FontFamily="Bahnschrift"
+                    FontSize="25"
+                    Content="Start"
+                    Margin="10 0 10 0"
+                    Click="GoToQuestionBoard"/>
+                <Button
+                    x:Name="ContinueSoloBtn"
+                    FontFamily="Bahnschrift"
+                    FontSize="25"
+                    Content="Start Without Mirror"
+                    Margin="10 0 10 0"
+                    Click="GoToQuestionBoard"/>
+                <Button
+                    x:Name="BackBtn"
+                    FontFamily="Bahnschrift"
+                    FontSize="25"
+                    Content="Back to Home"
+                    Margin="10 0 10 0"
+                    Click="GoToMain"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>
