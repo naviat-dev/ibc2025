@@ -27,4 +27,12 @@ public class MasterServer
         Console.WriteLine($"[Master] Pinged {mirrorId} with method '{method}'");
     }
 
+    public static async Task MasterShutdown()
+    {
+        if (MirrorName != null)
+        {
+            await App.Database.Child("mirrors").Child(MirrorName).Child("available").PutAsync(true);
+        }
+    }
+
 }
