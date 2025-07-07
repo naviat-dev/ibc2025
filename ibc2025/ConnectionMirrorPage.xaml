@@ -25,7 +25,6 @@
                     VerticalAlignment="Center"
                     Margin="10"
                     Padding="20,10"
-                    IsTabStop="True"
                     Click="GoToMain"/>
         </StackPanel>
     </Grid>
