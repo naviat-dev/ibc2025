@@ -17,7 +17,9 @@ public class MirrorServer
     {
         { "QuestionBoardPage.GoToQuestion", static t => QuestionBoardPage.GoToQuestion(t.Item1, t.Item2) },
         { "QuestionBoardPage.RegionIncr", static t => QuestionBoardPage.RegionIncr(t.Item1, t.Item2) },
-        { "QuestionBoardPage.RegionDecr", static t => QuestionBoardPage.RegionDecr(t.Item1, t.Item2) }
+        { "QuestionBoardPage.RegionDecr", static t => QuestionBoardPage.RegionDecr(t.Item1, t.Item2) },
+        { "QuestionPage.GoToQuestionBoard", static t => QuestionPage.GoToQuestionBoard(t.Item1, t.Item2) },
+        { "QuestionPage.AnswerSelect", static t => QuestionPage.AnswerSelect(t.Item1, t.Item2) }
     };
 
 	private static string GetHashedMachineIdentifier()
