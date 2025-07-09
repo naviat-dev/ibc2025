@@ -108,64 +108,6 @@ public sealed partial class QuestionBoardPage : Page
 		RegionIncr(sender, e);
 	}
 
-	public Storyboard RegionIncrColorIn(int region)
-	{
-		ColorAnimation startColorAnim = new()
-		{
-			From = Windows.UI.Color.FromArgb(0, 0, 128, 0),
-			To = Windows.UI.Color.FromArgb(255, 0, 128, 0),
-			Duration = TimeSpan.FromMilliseconds(500)
-		};
-
-		ColorAnimation endColorAnim = new()
-		{
-			From = Windows.UI.Color.FromArgb(0, 0, 255, 0),
-			To = Windows.UI.Color.FromArgb(255, 0, 255, 0),
-			Duration = TimeSpan.FromMilliseconds(500)
-		};
-
-		Storyboard.SetTarget(startColorAnim, (DependencyObject)PageBackground.FindName("StartStopRegion" + region));
-		Storyboard.SetTargetProperty(startColorAnim, "Color");
-
-		Storyboard.SetTarget(endColorAnim, (DependencyObject)PageBackground.FindName("EndStopRegion" + region));
-		Storyboard.SetTargetProperty(endColorAnim, "Color");
-
-		Storyboard storyboard = new();
-		storyboard.Children.Add(startColorAnim);
-		storyboard.Children.Add(endColorAnim);
-
-		return storyboard;
-	}
-
-	public Storyboard RegionIncrColorOut(Page pageBackground, int region)
-	{
-		ColorAnimation startColorAnim = new()
-		{
-			From = Windows.UI.Color.FromArgb(255, 0, 128, 0),
-			To = Windows.UI.Color.FromArgb(0, 0, 128, 0),
-			Duration = TimeSpan.FromMilliseconds(500)
-		};
-
-		ColorAnimation endColorAnim = new()
-		{
-			From = Windows.UI.Color.FromArgb(255, 0, 255, 0),
-			To = Windows.UI.Color.FromArgb(0, 0, 255, 0),
-			Duration = TimeSpan.FromMilliseconds(500)
-		};
-
-		Storyboard.SetTarget(startColorAnim, (DependencyObject)pageBackground.FindName("StartStopRegion" + region));
-		Storyboard.SetTargetProperty(startColorAnim, "Color");
-
-		Storyboard.SetTarget(endColorAnim, (DependencyObject)pageBackground.FindName("EndStopRegion" + region));
-		Storyboard.SetTargetProperty(endColorAnim, "Color");
-
-		Storyboard storyboard = new();
-		storyboard.Children.Add(startColorAnim);
-		storyboard.Children.Add(endColorAnim);
-
-		return storyboard;
-	}
-
 	public static void RegionIncr(object sender, RoutedEventArgs e)
 	{
 		if (App.MasterMode)
@@ -178,64 +120,6 @@ public sealed partial class QuestionBoardPage : Page
 	private void RegionDecrWrapper(object sender, RoutedEventArgs e)
 	{
 		RegionDecr(sender, e);
-	}
-
-	public Storyboard RegionDecrColorIn(int region)
-	{
-		ColorAnimation startColorAnim = new()
-		{
-			From = Windows.UI.Color.FromArgb(0, 128, 0, 0),
-			To = Windows.UI.Color.FromArgb(255, 128, 0, 0),
-			Duration = TimeSpan.FromMilliseconds(500)
-		};
-
-		ColorAnimation endColorAnim = new()
-		{
-			From = Windows.UI.Color.FromArgb(0, 255, 0, 0),
-			To = Windows.UI.Color.FromArgb(255, 255, 0, 0),
-			Duration = TimeSpan.FromMilliseconds(500)
-		};
-
-		Storyboard.SetTarget(startColorAnim, (DependencyObject)PageBackground.FindName("StartStopRegion" + region));
-		Storyboard.SetTargetProperty(startColorAnim, "Color");
-
-		Storyboard.SetTarget(endColorAnim, (DependencyObject)PageBackground.FindName("EndStopRegion" + region));
-		Storyboard.SetTargetProperty(endColorAnim, "Color");
-
-		Storyboard storyboard = new();
-		storyboard.Children.Add(startColorAnim);
-		storyboard.Children.Add(endColorAnim);
-
-		return storyboard;
-	}
-
-	public Storyboard RegionDecrColorOut(int region)
-	{
-		ColorAnimation startColorAnim = new()
-		{
-			From = Windows.UI.Color.FromArgb(255, 128, 0, 0),
-			To = Windows.UI.Color.FromArgb(0, 128, 0, 0),
-			Duration = TimeSpan.FromMilliseconds(500)
-		};
-
-		ColorAnimation endColorAnim = new()
-		{
-			From = Windows.UI.Color.FromArgb(255, 255, 0, 0),
-			To = Windows.UI.Color.FromArgb(0, 255, 0, 0),
-			Duration = TimeSpan.FromMilliseconds(500)
-		};
-
-		Storyboard.SetTarget(startColorAnim, (DependencyObject)PageBackground.FindName("StartStopRegion" + region));
-		Storyboard.SetTargetProperty(startColorAnim, "Color");
-
-		Storyboard.SetTarget(endColorAnim, (DependencyObject)PageBackground.FindName("EndStopRegion" + region));
-		Storyboard.SetTargetProperty(endColorAnim, "Color");
-
-		Storyboard storyboard = new();
-		storyboard.Children.Add(startColorAnim);
-		storyboard.Children.Add(endColorAnim);
-
-		return storyboard;
 	}
 
 	public static void RegionDecr(object sender, RoutedEventArgs e)
