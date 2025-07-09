@@ -153,12 +153,28 @@ public sealed partial class QuestionBoardPage : Page
 		{
 			if (App.TeamPtsDsply[0] != App.TeamPts[0])
 			{
-				for (int i = 0; i < 50; i++)
+				int current = App.TeamPtsDsply[0];
+				int target = App.TeamPts[0];
+				int steps = 30;
+				int delay = 15;
+
+				for (int i = 0; i < steps; i++)
 				{
-					App.TeamPtsDsply[0] += App.TeamPtsDsply[0] < App.TeamPts[0] ? 2 : -2;
-					Region1Pts.Text = App.TeamPtsDsply[0].ToString();
-					await Task.Delay(5);
+					double t = (i + 1) / (double)steps;
+					double eased = 1 - Math.Pow(1 - t, 3); // ease out cubic
+
+					int interpolated = (int)(current + (target - current) * eased);
+					if (interpolated != App.TeamPtsDsply[0])
+					{
+						App.TeamPtsDsply[0] = interpolated;
+						Region1Pts.Text = interpolated.ToString();
+					}
+
+					await Task.Delay(delay);
 				}
+
+				App.TeamPtsDsply[0] = target;
+				Region1Pts.Text = target.ToString(); // Ensure it's exact
 			}
 			else
 			{
@@ -173,12 +189,28 @@ public sealed partial class QuestionBoardPage : Page
 		{
 			if (App.TeamPtsDsply[1] != App.TeamPts[1])
 			{
-				for (int i = 0; i < 50; i++)
+				int current = App.TeamPtsDsply[1];
+				int target = App.TeamPts[1];
+				int steps = 30;
+				int delay = 15;
+
+				for (int i = 0; i < steps; i++)
 				{
-					App.TeamPtsDsply[1] += App.TeamPtsDsply[1] < App.TeamPts[1] ? 2 : -2;
-					Region2Pts.Text = App.TeamPtsDsply[1].ToString();
-					await Task.Delay(5);
+					double t = (i + 1) / (double)steps;
+					double eased = 1 - Math.Pow(1 - t, 3); // ease out cubic
+
+					int interpolated = (int)(current + (target - current) * eased);
+					if (interpolated != App.TeamPtsDsply[1])
+					{
+						App.TeamPtsDsply[1] = interpolated;
+						Region2Pts.Text = interpolated.ToString();
+					}
+
+					await Task.Delay(delay);
 				}
+
+				App.TeamPtsDsply[1] = target;
+				Region2Pts.Text = target.ToString(); // Ensure it's exact
 			}
 			else
 			{
@@ -193,12 +225,28 @@ public sealed partial class QuestionBoardPage : Page
 		{
 			if (App.TeamPtsDsply[2] != App.TeamPts[2])
 			{
-				for (int i = 0; i < 50; i++)
+				int current = App.TeamPtsDsply[2];
+				int target = App.TeamPts[2];
+				int steps = 30;
+				int delay = 15;
+
+				for (int i = 0; i < steps; i++)
 				{
-					App.TeamPtsDsply[2] += App.TeamPtsDsply[2] < App.TeamPts[2] ? 2 : -2;
-					Region3Pts.Text = App.TeamPtsDsply[2].ToString();
-					await Task.Delay(5);
+					double t = (i + 1) / (double)steps;
+					double eased = 1 - Math.Pow(1 - t, 3); // ease out cubic
+
+					int interpolated = (int)(current + (target - current) * eased);
+					if (interpolated != App.TeamPtsDsply[2])
+					{
+						App.TeamPtsDsply[2] = interpolated;
+						Region3Pts.Text = interpolated.ToString();
+					}
+
+					await Task.Delay(delay);
 				}
+
+				App.TeamPtsDsply[2] = target;
+				Region3Pts.Text = target.ToString(); // Ensure it's exact
 			}
 			else
 			{
@@ -213,12 +261,28 @@ public sealed partial class QuestionBoardPage : Page
 		{
 			if (App.TeamPtsDsply[3] != App.TeamPts[3])
 			{
-				for (int i = 0; i < 50; i++)
+				int current = App.TeamPtsDsply[3];
+				int target = App.TeamPts[3];
+				int steps = 30;
+				int delay = 15;
+
+				for (int i = 0; i < steps; i++)
 				{
-					App.TeamPtsDsply[3] += App.TeamPtsDsply[3] < App.TeamPts[3] ? 2 : -2;
-					Region4Pts.Text = App.TeamPtsDsply[3].ToString();
-					await Task.Delay(5);
+					double t = (i + 1) / (double)steps;
+					double eased = 1 - Math.Pow(1 - t, 3); // ease out cubic
+
+					int interpolated = (int)(current + (target - current) * eased);
+					if (interpolated != App.TeamPtsDsply[3])
+					{
+						App.TeamPtsDsply[3] = interpolated;
+						Region4Pts.Text = interpolated.ToString();
+					}
+
+					await Task.Delay(delay);
 				}
+
+				App.TeamPtsDsply[3] = target;
+				Region4Pts.Text = target.ToString(); // Ensure it's exact
 			}
 			else
 			{
@@ -233,12 +297,28 @@ public sealed partial class QuestionBoardPage : Page
 		{
 			if (App.TeamPtsDsply[4] != App.TeamPts[4])
 			{
-				for (int i = 0; i < 50; i++)
+				int current = App.TeamPtsDsply[4];
+				int target = App.TeamPts[4];
+				int steps = 30;
+				int delay = 15;
+
+				for (int i = 0; i < steps; i++)
 				{
-					App.TeamPtsDsply[4] += App.TeamPtsDsply[4] < App.TeamPts[4] ? 2 : -2;
-					Region5Pts.Text = App.TeamPtsDsply[4].ToString();
-					await Task.Delay(5);
+					double t = (i + 1) / (double)steps;
+					double eased = 1 - Math.Pow(1 - t, 3); // ease out cubic
+
+					int interpolated = (int)(current + (target - current) * eased);
+					if (interpolated != App.TeamPtsDsply[4])
+					{
+						App.TeamPtsDsply[4] = interpolated;
+						Region5Pts.Text = interpolated.ToString();
+					}
+
+					await Task.Delay(delay);
 				}
+
+				App.TeamPtsDsply[4] = target;
+				Region5Pts.Text = target.ToString(); // Ensure it's exact
 			}
 			else
 			{
@@ -253,12 +333,28 @@ public sealed partial class QuestionBoardPage : Page
 		{
 			if (App.TeamPtsDsply[5] != App.TeamPts[5])
 			{
-				for (int i = 0; i < 50; i++)
+				int current = App.TeamPtsDsply[5];
+				int target = App.TeamPts[5];
+				int steps = 30;
+				int delay = 15;
+
+				for (int i = 0; i < steps; i++)
 				{
-					App.TeamPtsDsply[5] += App.TeamPtsDsply[5] < App.TeamPts[5] ? 2 : -2;
-					Region6Pts.Text = App.TeamPtsDsply[5].ToString();
-					await Task.Delay(5);
+					double t = (i + 1) / (double)steps;
+					double eased = 1 - Math.Pow(1 - t, 3); // ease out cubic
+
+					int interpolated = (int)(current + (target - current) * eased);
+					if (interpolated != App.TeamPtsDsply[5])
+					{
+						App.TeamPtsDsply[5] = interpolated;
+						Region6Pts.Text = interpolated.ToString();
+					}
+
+					await Task.Delay(delay);
 				}
+
+				App.TeamPtsDsply[5] = target;
+				Region6Pts.Text = target.ToString(); // Ensure it's exact
 			}
 			else
 			{
@@ -273,12 +369,28 @@ public sealed partial class QuestionBoardPage : Page
 		{
 			if (App.TeamPtsDsply[6] != App.TeamPts[6])
 			{
-				for (int i = 0; i < 50; i++)
+				int current = App.TeamPtsDsply[6];
+				int target = App.TeamPts[6];
+				int steps = 30;
+				int delay = 15;
+
+				for (int i = 0; i < steps; i++)
 				{
-					App.TeamPtsDsply[6] += App.TeamPtsDsply[6] < App.TeamPts[6] ? 2 : -2;
-					Region7Pts.Text = App.TeamPtsDsply[6].ToString();
-					await Task.Delay(5);
+					double t = (i + 1) / (double)steps;
+					double eased = 1 - Math.Pow(1 - t, 3); // ease out cubic
+
+					int interpolated = (int)(current + (target - current) * eased);
+					if (interpolated != App.TeamPtsDsply[6])
+					{
+						App.TeamPtsDsply[6] = interpolated;
+						Region7Pts.Text = interpolated.ToString();
+					}
+
+					await Task.Delay(delay);
 				}
+
+				App.TeamPtsDsply[6] = target;
+				Region7Pts.Text = target.ToString(); // Ensure it's exact
 			}
 			else
 			{
@@ -287,3 +399,4 @@ public sealed partial class QuestionBoardPage : Page
 		}
 	}
 }
+
