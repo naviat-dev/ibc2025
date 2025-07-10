@@ -89,16 +89,10 @@ public sealed partial class QuestionBoardPage : Page
 			parent = VisualTreeHelper.GetParent(parent);
 			page = parent as QuestionBoardPage;
 		}
-
-		Storyboard storyboard = QuestionBtnDeactivate(sender);
+		Storyboard storyboard = App.SlideOutAnimation("X", TimeSpan.FromSeconds(0.5), page.RootGrid, page.MainTransform);
 		storyboard.Completed += (s, args) =>
 		{
-			Storyboard storyboard = App.SlideOutAnimation("X", TimeSpan.FromSeconds(0.5), page.RootGrid, page.MainTransform);
-			storyboard.Completed += (s2, args2) =>
-			{
-				_ = ((Frame)Window.Current.Content).Navigate(typeof(QuestionPage));
-			};
-			storyboard.Begin();
+			_ = ((Frame)Window.Current.Content).Navigate(typeof(QuestionPage));
 		};
 		storyboard.Begin();
 	}
