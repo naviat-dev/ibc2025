@@ -86,7 +86,14 @@ public sealed partial class QuestionPage : Page
 			if (secondsRemaining <= 0)
 			{
 				timer.Stop();
-				AnswerSelect("timeout", new RoutedEventArgs());
+				if (App.Questions[App.ActiveQuestion - 1].IsMultiChoice)
+				{
+					AnswerSelect(RevealAnswerBtn, new RoutedEventArgs());
+				}
+				else
+				{
+					AnswerSelect(App.Questions[App.ActiveQuestion - 1].Answer == "A" ? AnswerA : AnswerB, new RoutedEventArgs());
+				}
 			}
 		};
 		timer.Start();
@@ -120,7 +127,7 @@ public sealed partial class QuestionPage : Page
 	{
 		if (App.MasterMode)
 		{
-			if (sender == "timeout")
+			if (secondsRemaining > 0)
 			{
 				MasterServer.SendPingToMirror(MasterServer.MirrorId, "QuestionPage.AnswerSelect", "timeout");
 			}
@@ -168,7 +175,7 @@ public sealed partial class QuestionPage : Page
 				((QuestionPage)((FrameworkElement)sender).DataContext).MultiAnswerGrid.SetValue(VisibilityProperty, Visibility.Collapsed);
 				((QuestionPage)((FrameworkElement)sender).DataContext).SingleAnswerGrid.SetValue(VisibilityProperty, Visibility.Collapsed);
 				((QuestionPage)((FrameworkElement)sender).DataContext).CorrectAnswerGrid.SetValue(VisibilityProperty, Visibility.Visible);
-				if (btnName != "timeout")
+				if (secondsRemaining > 0)
 				{
 					((QuestionPage)((FrameworkElement)sender).DataContext).selectedAnswer = btnName[6].ToString();
 					((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrectLabel.SetValue(TextBlock.TextProperty, ((QuestionPage)((FrameworkElement)sender).DataContext).selectedAnswer == App.Questions[App.ActiveQuestion - 1].Answer ? "Correct!" : "Incorrect!");
