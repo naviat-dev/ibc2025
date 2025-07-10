@@ -25,7 +25,6 @@ public partial class App : Application
         InitializeComponent();
         Suspending += static (s, e) =>
         {
-            Console.WriteLine("Shutting down...");
             Task task = MasterMode ? MasterServer.MasterShutdown() : MirrorServer.MirrorShutdown();
             task.Wait(TimeSpan.FromSeconds(3));
         };

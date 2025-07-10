@@ -21,7 +21,6 @@ public class MasterServer
     public static async Task SendPingToMirror(string mirrorId, string method, string sender)
     {
         await App.Database.Child("mirrors").Child(mirrorId).Child("command").PutAsync(method + ":" + sender);
-        Console.WriteLine($"[Master] Pinged {mirrorId} with method '{method}'");
     }
 
     public static async Task MasterShutdown()

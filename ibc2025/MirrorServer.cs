@@ -53,8 +53,6 @@ public class MirrorServer
 				QuestionCommandChanged.Invoke();
 			}
 		}
-		else
-			Console.WriteLine($"[Mirror] Unknown command: {name}");
 	}
 
 	public static void ListenForPings()
@@ -67,7 +65,6 @@ public class MirrorServer
 				{
 					runCommand = !runCommand;
 					Execute(ping.Object);
-					Console.WriteLine($"[Mirror] Ping received! Method: {ping.Object}");
 					await App.Database.Child("mirrors").Child(MirrorId).Child("command").PutAsync("");
 				}
 				else
@@ -88,7 +85,6 @@ public class MirrorServer
 		{
 			if (ping.Key == "available" && !string.IsNullOrWhiteSpace(ping.Object))
 			{
-				Console.WriteLine(bool.Parse(ping.Object));
 				if (!bool.Parse(ping.Object))
 				{
 					MirrorAvailabilityChanged.Invoke();
@@ -102,17 +98,15 @@ public class MirrorServer
 	{
 		if (App.MasterMode)
 		{
-			Console.WriteLine("You shouldn't attempt to terminate a mirror server from a master application");
 			return;
 		}
 		try
 		{
 			await App.Database.Child("mirrors").Child(MirrorId).DeleteAsync();
-			Console.WriteLine($"Mirror {MirrorId} deleted successfully.");
 		}
-		catch (Exception ex)
+		catch (Exception)
 		{
-			Console.WriteLine($"Failed to delete mirror {MirrorId}: {ex.Message}");
+
 		}
 	}
 }

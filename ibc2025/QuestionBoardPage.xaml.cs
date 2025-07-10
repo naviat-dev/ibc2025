@@ -76,11 +76,6 @@ public sealed partial class QuestionBoardPage : Page
 		if (App.MasterMode)
 		{
 			MasterServer.SendPingToMirror(MasterServer.MirrorId, "QuestionBoardPage.GoToQuestion", sender.GetValue(NameProperty).ToString());
-			Console.WriteLine($"Master mode: Button {btn.Name} clicked.");
-		}
-		else
-		{
-			Console.WriteLine($"Mirror mode: Button {btn.Name} clicked.");
 		}
 		DependencyObject parent = btn;
 		QuestionBoardPage page = null;
