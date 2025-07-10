@@ -45,6 +45,15 @@ public partial class ConnectionMasterPage : Page
         MirrorList.Children.Clear();
         for (int i = 0; i < mirrorIds.Count; i++)
         {
+            // Ensure there are enough rows in the MirrorList grid
+            while (MirrorList.RowDefinitions.Count <= i)
+            {
+                MirrorList.RowDefinitions.Add(new RowDefinition()
+                {
+                    Height = new GridLength(1, GridUnitType.Auto),
+                });
+            }
+
             Button mirrorButton = new()
             {
                 Content = mirrorNames[i],
@@ -60,7 +69,12 @@ public partial class ConnectionMasterPage : Page
                 MasterServer.MirrorId = (string)((Button)sender).Tag;
                 ContinueBtn.IsEnabled = true;
             };
+            Grid.SetRow(mirrorButton, i);
             MirrorList.Children.Add(mirrorButton);
         }
+        MirrorList.RowDefinitions.Add(new RowDefinition()
+        {
+            Height = new GridLength(1, GridUnitType.Star),
+        });
     }
 }
