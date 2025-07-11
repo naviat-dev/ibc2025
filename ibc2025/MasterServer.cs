@@ -27,7 +27,10 @@ public class MasterServer
     {
         if (MirrorId != null)
         {
-            await App.Database.Child("mirrors").Child(MirrorId).Child("available").PutAsync(true);
+            if (await App.Database.Child("mirrors").Child(MirrorId).OnceSingleAsync<object>() != null)
+            {
+                await App.Database.Child("mirrors").Child(MirrorId).Child("available").PutAsync(true);
+            }
         }
     }
 }
