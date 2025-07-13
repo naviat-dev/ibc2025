@@ -181,6 +181,10 @@ public partial class App : Application
         }
         else
         {
+            for (int i = 0; i < 210; i++)
+            {
+                reader.ReadLine(); // Skip the first 210 lines
+            }
             DailyBackground.GradientStops.Add(new GradientStop { Color = Windows.UI.Color.FromArgb(255, 25, 48, 115), Offset = 0 });
             DailyBackground.GradientStops.Add(new GradientStop { Color = Windows.UI.Color.FromArgb(255, 39, 20, 82), Offset = 0.333 });
             DailyBackground.GradientStops.Add(new GradientStop { Color = Windows.UI.Color.FromArgb(255, 8, 62, 71), Offset = 0.667 });
