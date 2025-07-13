@@ -170,7 +170,7 @@ public partial class App : Application
             DailyBackground.GradientStops.Add(new GradientStop { Color = Windows.UI.Color.FromArgb(255, 39, 20, 82), Offset = 0 });
             DailyBackground.GradientStops.Add(new GradientStop { Color = Windows.UI.Color.FromArgb(255, 8, 62, 71), Offset = 1 });
         }
-        else if (Date.ToString().Split(" ")[0] == "6/30/2025")
+        else if (Date.ToString().Split(" ")[0] == "7/19/2025")
         {
             for (int i = 0; i < 140; i++)
             {
