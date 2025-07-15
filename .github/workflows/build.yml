@@ -1,0 +1,55 @@
+name: Build Uno Skia.GTK App
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:  # Allow manual triggering from GitHub UI
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    name: Build on Windows
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0'  # Match your project's version
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Publish for Windows
+      run: dotnet publish -c Release -f net9.0-desktop -r win-x64 --self-contained -o publish/windows
+
+    - name: Upload Windows Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: uno-win-x64
+        path: ./publish/win
+
+  build-macos:
+    runs-on: macos-14  # Use macOS 14 runner
+
+    name: Build on macOS
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Publish for macOS
+      run: dotnet publish -c Release -f net9.0-desktop -r osx-x64 --self-contained -o publish/macos
+
+    - name: Upload macOS Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: uno-mac-x64
+        path: ./publish/mac
