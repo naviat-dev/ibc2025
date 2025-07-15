@@ -28,7 +28,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: uno-win-x64
-        path: ./publish/win
+        path: ./publish/windows
 
   build-macos:
     runs-on: macos-14  # Use macOS 14 runner
@@ -40,7 +40,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '9.0.x'
+        dotnet-version: '9.0'
 
     - name: Restore dependencies
       run: dotnet restore
@@ -52,4 +52,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: uno-mac-x64
-        path: ./publish/mac
+        path: ./publish/macos
