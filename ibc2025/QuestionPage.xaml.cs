@@ -16,12 +16,6 @@ public sealed partial class QuestionPage : Page
 		QuestionText.SetValue(TextBlock.TextProperty, App.Questions[App.ActiveQuestion - 1].QuestionText);
 		CorrectAnswerGrid.SetValue(VisibilityProperty, Visibility.Collapsed);
 
-		MirrorServer.QuestionCommandChanged += () =>
-		{
-			string[] command = MirrorServer.LastCommand.Split(":");
-			_ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => MirrorServer.Commands[command[0]]((PageBackground.FindName(command[1]), new RoutedEventArgs())));
-		};
-
 		RoundNumber.Text = "Round " + (int.Parse(DateTime.Today.ToString().Split("/")[1]) - 16);
 		AnswerA.DataContext = this;
 		AnswerB.DataContext = this;
@@ -106,10 +100,6 @@ public sealed partial class QuestionPage : Page
 
 	public static void GoToQuestionBoard(object sender, RoutedEventArgs e)
 	{
-		if (App.MasterMode)
-		{
-			MasterServer.SendPingToMirror(MasterServer.MirrorId, "QuestionPage.GoToQuestionBoard", sender.GetValue(NameProperty).ToString());
-		}
 		Storyboard storyboard = App.SlideOutAnimation("X", TimeSpan.FromSeconds(0.5), ((QuestionPage)((FrameworkElement)sender).DataContext).RootGrid, ((QuestionPage)((FrameworkElement)sender).DataContext).MainTransform);
 		storyboard.Completed += static (s, args) =>
 		{
@@ -125,17 +115,6 @@ public sealed partial class QuestionPage : Page
 
 	public static void AnswerSelect(object sender, RoutedEventArgs e)
 	{
-		if (App.MasterMode)
-		{
-			if (secondsRemaining > 0)
-			{
-				MasterServer.SendPingToMirror(MasterServer.MirrorId, "QuestionPage.AnswerSelect", "timeout");
-			}
-			else
-			{
-				MasterServer.SendPingToMirror(MasterServer.MirrorId, "QuestionPage.AnswerSelect", sender.GetValue(NameProperty).ToString());
-			}
-		}
 		timer.Stop();
 
 		((QuestionPage)((Button)sender).DataContext).AnswerCorrectReference.SetValue(TextBlock.TextProperty, App.Questions[App.ActiveQuestion - 1].Reference);

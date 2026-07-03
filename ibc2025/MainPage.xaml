@@ -24,32 +24,19 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
                 <Button
                     Grid.Row="0"
                     Grid.Column="0"
-                    Content="Start as Master"
+                    Content="Start"
                     FontSize="30"
                     FontFamily="Bahnschrift"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Margin="10"
                     Padding="20,10"
-                    Click="StartMaster"/>
-
-                <Button
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Content="Start as Mirror"
-                    FontSize="30"
-                    FontFamily="Bahnschrift"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Margin="10"
-                    Padding="20,10"
-                    Click="StartMirror"/>
+                    Click="Start"/>
             </Grid>
         </StackPanel>
     </Grid>

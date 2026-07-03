@@ -1576,7 +1576,7 @@
       },
       "Microsoft.Win32.SystemEvents/9.0.0": {
         "runtime": {
-          "lib/net9.0/Microsoft.Win32.SystemEvents.dll": {
+          "lib/net10.0/Microsoft.Win32.SystemEvents.dll": {
             "assemblyVersion": "9.0.0.0",
             "fileVersion": "9.0.24.52809"
           }
@@ -1811,7 +1811,7 @@
       "Uno.Fonts.Roboto/2.2.2": {},
       "Uno.Foundation/6.0.780": {
         "runtime": {
-          "uno-runtime/net9.0/skia/Uno.Foundation.dll": {
+          "uno-runtime/net10.0/skia/Uno.Foundation.dll": {
             "assemblyVersion": "255.255.255.255",
             "fileVersion": "255.255.255.255"
           }
@@ -1853,7 +1853,7 @@
           "Uno.Foundation.Logging": "6.0.780"
         },
         "runtime": {
-          "lib/net9.0/Uno.UI.Adapter.Microsoft.Extensions.Logging.dll": {
+          "lib/net10.0/Uno.UI.Adapter.Microsoft.Extensions.Logging.dll": {
             "assemblyVersion": "255.255.255.255",
             "fileVersion": "255.255.255.255"
           }
@@ -1877,11 +1877,11 @@
           "Uno.Foundation": "6.0.780"
         },
         "runtime": {
-          "uno-runtime/net9.0/skia/Uno.dll": {
+          "uno-runtime/net10.0/skia/Uno.dll": {
             "assemblyVersion": "255.255.255.255",
             "fileVersion": "255.255.255.255"
           },
-          "uno-runtime/net9.0/skia/Uno.UI.Dispatching.dll": {
+          "uno-runtime/net10.0/skia/Uno.UI.Dispatching.dll": {
             "assemblyVersion": "255.255.255.255",
             "fileVersion": "255.255.255.255"
           }
@@ -1895,31 +1895,31 @@
           "Uno.WinRT": "6.0.780"
         },
         "runtime": {
-          "uno-runtime/net9.0/skia/Uno.UI.Composition.dll": {
+          "uno-runtime/net10.0/skia/Uno.UI.Composition.dll": {
             "assemblyVersion": "255.255.255.255",
             "fileVersion": "255.255.255.255"
           },
-          "uno-runtime/net9.0/skia/Uno.UI.dll": {
+          "uno-runtime/net10.0/skia/Uno.UI.dll": {
             "assemblyVersion": "255.255.255.255",
             "fileVersion": "255.255.255.255"
           },
-          "uno-runtime/net9.0/skia/Uno.UI.FluentTheme.dll": {
+          "uno-runtime/net10.0/skia/Uno.UI.FluentTheme.dll": {
             "assemblyVersion": "255.255.255.255",
             "fileVersion": "255.255.255.255"
           },
-          "uno-runtime/net9.0/skia/Uno.UI.FluentTheme.v1.dll": {
+          "uno-runtime/net10.0/skia/Uno.UI.FluentTheme.v1.dll": {
             "assemblyVersion": "255.255.255.255",
             "fileVersion": "255.255.255.255"
           },
-          "uno-runtime/net9.0/skia/Uno.UI.FluentTheme.v2.dll": {
+          "uno-runtime/net10.0/skia/Uno.UI.FluentTheme.v2.dll": {
             "assemblyVersion": "255.255.255.255",
             "fileVersion": "255.255.255.255"
           },
-          "uno-runtime/net9.0/skia/Uno.UI.Toolkit.dll": {
+          "uno-runtime/net10.0/skia/Uno.UI.Toolkit.dll": {
             "assemblyVersion": "255.255.255.255",
             "fileVersion": "255.255.255.255"
           },
-          "uno-runtime/net9.0/skia/Uno.Xaml.dll": {
+          "uno-runtime/net10.0/skia/Uno.Xaml.dll": {
             "assemblyVersion": "255.255.255.255",
             "fileVersion": "255.255.255.255"
           }
@@ -1944,7 +1944,7 @@
           "Uno.WinUI": "6.0.780"
         },
         "runtime": {
-          "lib/net9.0/Uno.WinUI.Graphics2DSK.dll": {
+          "lib/net10.0/Uno.WinUI.Graphics2DSK.dll": {
             "assemblyVersion": "255.255.255.255",
             "fileVersion": "255.255.255.255"
           }
@@ -1956,7 +1956,7 @@
           "Uno.WinUI": "6.0.780"
         },
         "runtime": {
-          "uno-runtime/net9.0/skia/Uno.UI.Lottie.dll": {
+          "uno-runtime/net10.0/skia/Uno.UI.Lottie.dll": {
             "assemblyVersion": "255.255.255.255",
             "fileVersion": "255.255.255.255"
           }
@@ -1967,7 +1967,7 @@
           "Uno.WinUI": "6.0.780"
         },
         "runtime": {
-          "lib/net9.0/Uno.UI.Runtime.Skia.dll": {
+          "lib/net10.0/Uno.UI.Runtime.Skia.dll": {
             "assemblyVersion": "255.255.255.255",
             "fileVersion": "255.255.255.255"
           }
@@ -1984,7 +1984,7 @@
           "Uno.WinUI.Runtime.Skia": "6.0.780"
         },
         "runtime": {
-          "lib/net9.0/Uno.UI.Runtime.Skia.Linux.FrameBuffer.dll": {
+          "lib/net10.0/Uno.UI.Runtime.Skia.Linux.FrameBuffer.dll": {
             "assemblyVersion": "255.255.255.255",
             "fileVersion": "255.255.255.255"
           }
@@ -2000,7 +2000,7 @@
           "Uno.WinUI.Runtime.Skia": "6.0.780"
         },
         "runtime": {
-          "lib/net9.0/Uno.UI.Runtime.Skia.MacOS.dll": {
+          "lib/net10.0/Uno.UI.Runtime.Skia.MacOS.dll": {
             "assemblyVersion": "255.255.255.255",
             "fileVersion": "255.255.255.255"
           }
@@ -2019,11 +2019,11 @@
           "Uno.WinUI.Runtime.Skia": "6.0.780"
         },
         "runtime": {
-          "lib/net9.0/Uno.UI.Runtime.Skia.Win32.Support.dll": {
+          "lib/net10.0/Uno.UI.Runtime.Skia.Win32.Support.dll": {
             "assemblyVersion": "255.255.255.255",
             "fileVersion": "255.255.255.255"
           },
-          "lib/net9.0/Uno.UI.Runtime.Skia.Win32.dll": {
+          "lib/net10.0/Uno.UI.Runtime.Skia.Win32.dll": {
             "assemblyVersion": "255.255.255.255",
             "fileVersion": "255.255.255.255"
           }
@@ -2037,7 +2037,7 @@
           "Uno.WinUI.Runtime.Skia": "6.0.780"
         },
         "runtime": {
-          "lib/net9.0/Uno.UI.Runtime.Skia.Wpf.dll": {
+          "lib/net10.0/Uno.UI.Runtime.Skia.Wpf.dll": {
             "assemblyVersion": "255.255.255.255",
             "fileVersion": "255.255.255.255"
           }
@@ -2055,7 +2055,7 @@
           "Uno.WinUI.Runtime.Skia": "6.0.780"
         },
         "runtime": {
-          "lib/net9.0/Uno.UI.Runtime.Skia.X11.dll": {
+          "lib/net10.0/Uno.UI.Runtime.Skia.X11.dll": {
             "assemblyVersion": "255.255.255.255",
             "fileVersion": "255.255.255.255"
           }

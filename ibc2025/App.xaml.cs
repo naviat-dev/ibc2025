@@ -23,11 +23,6 @@ public partial class App : Application
     public App()
     {
         InitializeComponent();
-        Suspending += static (s, e) =>
-        {
-            Task task = MasterMode ? MasterServer.MasterShutdown() : MirrorServer.MirrorShutdown();
-            task.Wait(TimeSpan.FromSeconds(3));
-        };
         Start();
     }
 

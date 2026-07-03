@@ -12,24 +12,13 @@ public sealed partial class MainPage : Page
 
     }
 
-    private void StartMaster(object sender, RoutedEventArgs e)
+    private void Start(object sender, RoutedEventArgs e)
     {
         App.MasterMode = true;
         Storyboard storyboard = App.SlideOutAnimation("X", TimeSpan.FromSeconds(0.5), RootGrid, MainTransform);
         storyboard.Completed += static (s, args) =>
         {
-            _ = ((Frame)Window.Current.Content).Navigate(typeof(ConnectionMasterPage));
-        };
-        storyboard.Begin();
-    }
-
-    private void StartMirror(object sender, RoutedEventArgs e)
-    {
-        App.MasterMode = false;
-        Storyboard storyboard = App.SlideOutAnimation("X", TimeSpan.FromSeconds(0.5), RootGrid, MainTransform);
-        storyboard.Completed += static (s, args) =>
-        {
-            _ = ((Frame)Window.Current.Content).Navigate(typeof(ConnectionMirrorPage));
+            _ = ((Frame)Window.Current.Content).Navigate(typeof(QuestionBoardPage));
         };
         storyboard.Begin();
     }
