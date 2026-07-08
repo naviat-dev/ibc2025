@@ -21,8 +21,10 @@
             <Grid
                 Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <Button
                     Grid.Column="0"
@@ -32,8 +34,12 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     Click="BackToCategory"/>
-                <StackPanel
+                <Image
                     Grid.Column="1"
+                    Source="Assets/mfm-logo.png"
+                    Margin="10"/>
+                <StackPanel
+                    Grid.Column="2"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
                     <TextBlock
@@ -53,6 +59,10 @@
                         FontFamily="Bahnschrift"
                         FontSize="20"/>
                 </StackPanel>
+                <Image
+                    Grid.Column="3"
+                    Source="Assets/ibc-logo.png"
+                    Margin="10"/>
             </Grid>
             <Grid
                 Grid.Row="1"

@@ -6,10 +6,10 @@
 	<Grid x:Name="RootGrid"
 		  HorizontalAlignment="Stretch"
 		  VerticalAlignment="Stretch">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="300"/>
-        </Grid.ColumnDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="300"/>
+		</Grid.ColumnDefinitions>
 		<Grid.RenderTransform>
 			<TranslateTransform x:Name="MainTransform"/>
 		</Grid.RenderTransform>
@@ -18,16 +18,33 @@
 			HorizontalAlignment="Stretch"
 			VerticalAlignment="Stretch">
 			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="150"/>
 				<RowDefinition Height="*"/>
 			</Grid.RowDefinitions>
-			<TextBlock
-				Grid.Row="0"
-				Text="INTERNATIONAL BIBLE QUIZ"
-				FontSize="50"
-				FontFamily="Bahnschrift"
-				HorizontalAlignment="Center"
-				Margin="0,0,0,12"/>
+			<Grid
+				Grid.Row="0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+				<Image
+					Grid.Column="0"
+					Source="Assets/mfm-logo.png"
+					Margin="10"/>
+				<TextBlock
+					Grid.Column="1"
+					Text="INTERNATIONAL BIBLE QUIZ"
+					FontSize="50"
+					FontFamily="Bahnschrift"
+					HorizontalAlignment="Center"
+					VerticalAlignment="Center"
+					Margin="10"/>
+				<Image
+					Grid.Column="2"
+					Source="Assets/ibc-logo.png"
+					Margin="10"/>
+			</Grid>
 			<Grid
 				Grid.Row="1"
 				HorizontalAlignment="Stretch"
