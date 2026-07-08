@@ -144,6 +144,7 @@ public sealed partial class QuestionPage : Page
 			Storyboard storyboard = App.SlideOutAnimation("X", TimeSpan.FromSeconds(0.5), ((QuestionPage)((FrameworkElement)sender).DataContext).SingleAnswerGrid, ((QuestionPage)((FrameworkElement)sender).DataContext).SingleTransform, 200);
 			storyboard.Completed += (s, args) =>
 			{
+				QuestionPage page = (QuestionPage)((FrameworkElement)sender).DataContext;
 				((QuestionPage)((FrameworkElement)sender).DataContext).MultiAnswerGrid.SetValue(VisibilityProperty, Visibility.Collapsed);
 				((QuestionPage)((FrameworkElement)sender).DataContext).SingleAnswerGrid.SetValue(VisibilityProperty, Visibility.Collapsed);
 				((QuestionPage)((FrameworkElement)sender).DataContext).CorrectAnswerGrid.SetValue(VisibilityProperty, Visibility.Visible);
@@ -153,6 +154,7 @@ public sealed partial class QuestionPage : Page
 				((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrectIcon.SetValue(VisibilityProperty, Visibility.Collapsed);
 				((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrect.SetValue(BackgroundProperty, new SolidColorBrush(OptionColors[0]));
 				((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrectText.SetValue(TextBlock.TextProperty, question.Answer);
+				page.DispatcherQueue.TryEnqueue(page.ResizeSingle);
 				Storyboard storyboard = App.SlideInAnimation("X", TimeSpan.FromSeconds(0.5), ((QuestionPage)((FrameworkElement)sender).DataContext).CorrectAnswerGrid, ((QuestionPage)((FrameworkElement)sender).DataContext).CorrectTransform, 200);
 				storyboard.Completed += (s2, args2) =>
 				{
@@ -167,6 +169,7 @@ public sealed partial class QuestionPage : Page
 			Storyboard storyboard = App.SlideOutAnimation("X", TimeSpan.FromSeconds(0.5), ((QuestionPage)((FrameworkElement)sender).DataContext).MultiAnswerGrid, ((QuestionPage)((FrameworkElement)sender).DataContext).MultiTransform, 200);
 			storyboard.Completed += (s, args) =>
 			{
+				QuestionPage page = (QuestionPage)((FrameworkElement)sender).DataContext;
 				((QuestionPage)((FrameworkElement)sender).DataContext).MultiAnswerGrid.SetValue(VisibilityProperty, Visibility.Collapsed);
 				((QuestionPage)((FrameworkElement)sender).DataContext).SingleAnswerGrid.SetValue(VisibilityProperty, Visibility.Collapsed);
 				((QuestionPage)((FrameworkElement)sender).DataContext).CorrectAnswerGrid.SetValue(VisibilityProperty, Visibility.Visible);
@@ -201,6 +204,7 @@ public sealed partial class QuestionPage : Page
 				((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrectText.SetValue(TextBlock.TextProperty, question.Options[question.Answer[0] - 65]);
 				((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrect.SetValue(BackgroundProperty, new SolidColorBrush(OptionColors[question.Answer[0] - 65]));
 				((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrectIconText.Text = question.Answer;
+				page.DispatcherQueue.TryEnqueue(page.ResizeMulti);
 
 				Storyboard storyboard = App.SlideInAnimation("X", TimeSpan.FromSeconds(0.5), ((QuestionPage)((FrameworkElement)sender).DataContext).CorrectAnswerGrid, ((QuestionPage)((FrameworkElement)sender).DataContext).CorrectTransform, 200);
 				storyboard.Completed += (s2, args2) =>
@@ -217,26 +221,25 @@ public sealed partial class QuestionPage : Page
 	{
 		double buttonHeight = Window.Current.Bounds.Height * 0.175;
 		double buttonTextWidth = (Window.Current.Bounds.Width / 2) - buttonHeight - 26;
+		double optionTextMaxHeight = Math.Max(1, buttonHeight - 20);
+		double optionTextMaxFontSize = Math.Max(14, buttonTextWidth * 0.07);
 
 		ResizeQuestionTextToFit(0.05);
-		AnswerAText.MaxWidth = buttonTextWidth;
-		AnswerAText.FontSize = buttonTextWidth * 0.07;
+		ResizeTextBlockToFit(AnswerAText, question.Options[0], buttonTextWidth, optionTextMaxHeight, optionTextMaxFontSize);
 		AnswerA.SetValue(HeightProperty, buttonHeight);
 		AnswerA.SetValue(CornerRadiusProperty, new CornerRadius(buttonHeight / 2));
 		AnswerAIcon.SetValue(HeightProperty, buttonHeight - 40);
 		AnswerAIcon.SetValue(WidthProperty, buttonHeight - 40);
 		AnswerAIconText.FontSize = (buttonHeight - 40) * 28 / 48;
 
-		AnswerBText.MaxWidth = buttonTextWidth;
-		AnswerBText.FontSize = buttonTextWidth * 0.07;
+		ResizeTextBlockToFit(AnswerBText, question.Options[1], buttonTextWidth, optionTextMaxHeight, optionTextMaxFontSize);
 		AnswerB.SetValue(HeightProperty, buttonHeight);
 		AnswerB.SetValue(CornerRadiusProperty, new CornerRadius(buttonHeight / 2));
 		AnswerBIcon.SetValue(HeightProperty, buttonHeight - 40);
 		AnswerBIcon.SetValue(WidthProperty, buttonHeight - 40);
 		AnswerBIconText.FontSize = (buttonHeight - 40) * 28 / 48;
 
-		AnswerCText.MaxWidth = buttonTextWidth;
-		AnswerCText.FontSize = buttonTextWidth * 0.07;
+		ResizeTextBlockToFit(AnswerCText, question.Options[2], buttonTextWidth, optionTextMaxHeight, optionTextMaxFontSize);
 		AnswerC.SetValue(HeightProperty, buttonHeight);
 		AnswerC.SetValue(CornerRadiusProperty, new CornerRadius(buttonHeight / 2));
 		AnswerD.SetValue(HeightProperty, buttonHeight);
@@ -244,16 +247,14 @@ public sealed partial class QuestionPage : Page
 		AnswerCIcon.SetValue(WidthProperty, buttonHeight - 40);
 		AnswerCIconText.FontSize = (buttonHeight - 40) * 28 / 48;
 
-		AnswerDText.MaxWidth = buttonTextWidth;
-		AnswerDText.FontSize = buttonTextWidth * 0.07;
+		ResizeTextBlockToFit(AnswerDText, question.Options[3], buttonTextWidth, optionTextMaxHeight, optionTextMaxFontSize);
 		AnswerD.SetValue(HeightProperty, buttonHeight);
 		AnswerD.SetValue(CornerRadiusProperty, new CornerRadius(buttonHeight / 2));
 		AnswerDIcon.SetValue(HeightProperty, buttonHeight - 40);
 		AnswerDIcon.SetValue(WidthProperty, buttonHeight - 40);
 		AnswerDIconText.FontSize = (buttonHeight - 40) * 28 / 48;
 
-		AnswerCorrectText.MaxWidth = buttonTextWidth;
-		AnswerCorrectText.FontSize = buttonTextWidth * 0.07;
+		ResizeTextBlockToFit(AnswerCorrectText, AnswerCorrectText.Text ?? string.Empty, buttonTextWidth, optionTextMaxHeight, optionTextMaxFontSize);
 		AnswerCorrect.SetValue(HeightProperty, buttonHeight);
 		AnswerCorrect.SetValue(CornerRadiusProperty, new CornerRadius(buttonHeight / 2));
 		AnswerCorrectIcon.SetValue(HeightProperty, buttonHeight - 40);
@@ -265,13 +266,14 @@ public sealed partial class QuestionPage : Page
 	{
 		double buttonHeight = Window.Current.Bounds.Height * 0.175;
 		double buttonTextWidth = (Window.Current.Bounds.Width / 2) - buttonHeight - 26;
+		double optionTextMaxHeight = Math.Max(1, buttonHeight - 20);
+		double optionTextMaxFontSize = Math.Max(14, buttonTextWidth * 0.07);
 
 		ResizeQuestionTextToFit(0.05);
 		SingleAnswerText.FontSize = Window.Current.Bounds.Width * 0.05;
 		SingleAnswerDesc.FontSize = Window.Current.Bounds.Width * 0.03;
 
-		AnswerCorrectText.MaxWidth = buttonTextWidth;
-		AnswerCorrectText.FontSize = buttonTextWidth * 0.07;
+		ResizeTextBlockToFit(AnswerCorrectText, AnswerCorrectText.Text ?? string.Empty, buttonTextWidth, optionTextMaxHeight, optionTextMaxFontSize);
 		AnswerCorrect.SetValue(HeightProperty, buttonHeight);
 		AnswerCorrect.SetValue(CornerRadiusProperty, new CornerRadius(buttonHeight / 2));
 		AnswerCorrectIcon.SetValue(HeightProperty, buttonHeight - 40);
@@ -289,23 +291,33 @@ public sealed partial class QuestionPage : Page
 			? QuestionText.ActualHeight
 			: Math.Max(1, Window.Current.Bounds.Height - 200);
 
-		string text = question?.QuestionText ?? string.Empty;
-		double minFontSize = 14;
+		ResizeTextBlockToFit(QuestionText, question?.QuestionText ?? string.Empty, availableWidth, availableHeight, maxFontSize);
+	}
 
-		if (string.IsNullOrWhiteSpace(text) || maxFontSize <= minFontSize)
+	private void ResizeTextBlockToFit(TextBlock textBlock, string text, double maxWidth, double maxHeight, double maxFontSize, double minFontSize = 14)
+	{
+		double safeWidth = Math.Max(1, maxWidth);
+		double safeHeight = Math.Max(1, maxHeight);
+		double safeMinFont = Math.Max(1, minFontSize);
+		double safeMaxFont = Math.Max(safeMinFont, maxFontSize);
+
+		textBlock.Text = text;
+		textBlock.MaxWidth = safeWidth;
+
+		if (string.IsNullOrWhiteSpace(text))
 		{
-			QuestionText.FontSize = Math.Max(minFontSize, maxFontSize);
+			textBlock.FontSize = safeMaxFont;
 			return;
 		}
 
-		double low = minFontSize;
-		double high = maxFontSize;
-		double best = minFontSize;
+		double low = safeMinFont;
+		double high = safeMaxFont;
+		double best = safeMinFont;
 
 		for (int i = 0; i < 12; i++)
 		{
 			double mid = (low + high) / 2;
-			if (DoesQuestionTextFit(text, mid, availableWidth, availableHeight))
+			if (DoesTextBlockFit(textBlock, text, mid, safeWidth, safeHeight))
 			{
 				best = mid;
 				low = mid;
@@ -316,20 +328,21 @@ public sealed partial class QuestionPage : Page
 			}
 		}
 
-		QuestionText.FontSize = best;
+		textBlock.FontSize = best;
 	}
 
-	private bool DoesQuestionTextFit(string text, double fontSize, double maxWidth, double maxHeight)
+	private static bool DoesTextBlockFit(TextBlock template, string text, double fontSize, double maxWidth, double maxHeight)
 	{
 		TextBlock measurementBlock = new()
 		{
 			Text = text,
-			FontFamily = QuestionText.FontFamily,
-			FontWeight = QuestionText.FontWeight,
-			FontStyle = QuestionText.FontStyle,
-			FontStretch = QuestionText.FontStretch,
+			FontFamily = template.FontFamily,
+			FontWeight = template.FontWeight,
+			FontStyle = template.FontStyle,
+			FontStretch = template.FontStretch,
 			FontSize = fontSize,
-			TextWrapping = TextWrapping.Wrap
+			TextWrapping = template.TextWrapping,
+			TextAlignment = template.TextAlignment
 		};
 
 		measurementBlock.Measure(new Windows.Foundation.Size(maxWidth, double.PositiveInfinity));
