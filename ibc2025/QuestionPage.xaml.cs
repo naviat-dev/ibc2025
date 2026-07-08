@@ -8,7 +8,6 @@ public sealed partial class QuestionPage : Page
 	private string selectedAnswer = "";
 	private static readonly Color[] OptionColors = [Color.FromArgb(255, 25, 48, 115), Color.FromArgb(255, 39, 20, 82), Color.FromArgb(255, 8, 62, 71), Color.FromArgb(255, 108, 43, 112)];
 	private static DispatcherTimer timer;
-	private static int secondsRemaining = 20;
 	private static Question question;
 	public QuestionPage()
 	{
@@ -19,6 +18,7 @@ public sealed partial class QuestionPage : Page
 		CorrectAnswerGrid.SetValue(VisibilityProperty, Visibility.Collapsed);
 
 		RoundNumber.Text = $"Round {int.Parse(DateTime.Today.ToString().Split("/")[1]) - 15}";
+		RoundTimer.Text = "00:" + question.Time.ToString("D2");
 		AnswerA.DataContext = this;
 		AnswerB.DataContext = this;
 		AnswerC.DataContext = this;
@@ -68,17 +68,14 @@ public sealed partial class QuestionPage : Page
 
 	private void StartCountdown()
 	{
-		secondsRemaining = 20; // or any time you want
-		RoundTimer.Text = "00:" + secondsRemaining.ToString("D2");
-
 		timer = new()
 		{
 			Interval = TimeSpan.FromSeconds(1)
 		};
 		timer.Tick += (object sender, object e) =>
 		{
-			secondsRemaining--;
-			if (secondsRemaining <= 5)
+			question.Time--;
+			if (question.Time <= 5)
 			{
 				RoundTimer.Foreground = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0)); // Red color for low time
 			}
@@ -86,9 +83,9 @@ public sealed partial class QuestionPage : Page
 			{
 				RoundTimer.Foreground = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255)); // White color for normal time
 			}
-			RoundTimer.Text = "00:" + secondsRemaining.ToString("D2");
+			RoundTimer.Text = "00:" + question.Time.ToString("D2");
 
-			if (secondsRemaining <= 0)
+			if (question.Time <= 0)
 			{
 				timer.Stop();
 				if (question.IsMultiChoice)
@@ -180,7 +177,7 @@ public sealed partial class QuestionPage : Page
 				}
 				else
 				{
-					if (secondsRemaining > 0)
+					if (question.Time > 0)
 					{
 						((QuestionPage)((FrameworkElement)sender).DataContext).selectedAnswer = btnName[6].ToString();
 						if (((QuestionPage)((FrameworkElement)sender).DataContext).selectedAnswer == question.Answer)

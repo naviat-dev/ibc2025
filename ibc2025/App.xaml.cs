@@ -162,8 +162,8 @@ public partial class App : Application
             string[] line = reader.ReadLine().Split('\t');
             int cat = int.Parse(line[7][^1..]) - 1;
             Questions[cat].Add(cat < 2 ?
-                new Question(line[0], line[5], [line[1], line[2], line[3], line[4]], line[6]) :
-                new Question(line[0], line[5], line[6]));
+                new (line[0], line[5], [line[1], line[2], line[3], line[4]], line[6], cat == 1 ? 30 : 20) :
+                new (line[0], line[5], line[6], cat == 4 ? 30 : 20));
         }
     }
 
