@@ -25,10 +25,5 @@
       SkiaRenderer;
     </UnoFeatures>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Firebase.Database" />
-    <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" />
-  </ItemGroup>
 
 </Project>

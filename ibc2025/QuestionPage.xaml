@@ -67,7 +67,7 @@
 			<TextBlock
 				Grid.Column="0"
 				x:Name="QuestionText"
-				FontSize="75"
+				FontSize="40"
 				FontFamily="Bahnschrift"
 				HorizontalAlignment="Center"
 				VerticalAlignment="Center"

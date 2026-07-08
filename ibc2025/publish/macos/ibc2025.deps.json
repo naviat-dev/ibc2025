@@ -9,7 +9,6 @@
     ".NETCoreApp,Version=v9.0/osx-x64": {
       "ibc2025/1.0": {
         "dependencies": {
-          "Firebase.Database": "1.0.0",
           "Microsoft.Extensions.Hosting": "9.0.5",
           "Microsoft.Extensions.Logging.Console": "9.0.5",
           "SkiaSharp.Skottie": "3.119.0-preview.1.2",
@@ -1332,18 +1331,6 @@
         }
       },
       "CommunityToolkit.Mvvm/8.4.0": {},
-      "Firebase.Database/1.0.0": {
-        "dependencies": {
-          "Newtonsoft.Json": "13.0.3",
-          "Rx-Main": "2.2.5"
-        },
-        "runtime": {
-          "lib/portable45-net45+win8+wpa81/Firebase.Database.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
-        }
-      },
       "HarfBuzzSharp/8.3.1.1-preview.1.2": {
         "dependencies": {
           "HarfBuzzSharp.NativeAssets.Win32": "8.3.1.1-preview.1.2",
@@ -2092,13 +2079,6 @@
       "sha512": "sha512-tqVU8yc/ADO9oiTRyTnwhFN68hCwvkliMierptWOudIAvWY1mWCh5VFh+guwHJmpMwfg0J0rY+yyd5Oy7ty9Uw==",
       "path": "communitytoolkit.mvvm/8.4.0",
       "hashPath": "communitytoolkit.mvvm.8.4.0.nupkg.sha512"
-    },
-    "Firebase.Database/1.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-nEALT430lPZ86itiPiih9ndGG4ZV0sy5GaoVgzZTx5icqpFk/aHjIwMOpUqn7+Me0bDL6WOQnYlsnQcTD1t84g==",
-      "path": "firebase.database/1.0.0",
-      "hashPath": "firebase.database.1.0.0.nupkg.sha512"
     },
     "HarfBuzzSharp/8.3.1.1-preview.1.2": {
       "type": "package",

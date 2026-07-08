@@ -9,14 +9,16 @@ public sealed partial class QuestionPage : Page
 	private static readonly Color[] OptionColors = [Color.FromArgb(255, 25, 48, 115), Color.FromArgb(255, 39, 20, 82), Color.FromArgb(255, 8, 62, 71), Color.FromArgb(255, 108, 43, 112)];
 	private static DispatcherTimer timer;
 	private static int secondsRemaining = 20;
+	private static Question question;
 	public QuestionPage()
 	{
 		InitializeComponent();
+		question = App.Questions[(int)App.Category][App.ActiveQuestion - 1];
 		PageBackground.Background = App.DailyBackground;
-		QuestionText.SetValue(TextBlock.TextProperty, App.Questions[App.ActiveQuestion - 1].QuestionText);
+		QuestionText.SetValue(TextBlock.TextProperty, question.QuestionText);
 		CorrectAnswerGrid.SetValue(VisibilityProperty, Visibility.Collapsed);
 
-		RoundNumber.Text = "Round " + (int.Parse(DateTime.Today.ToString().Split("/")[1]) - 16);
+		RoundNumber.Text = $"Round {int.Parse(DateTime.Today.ToString().Split("/")[1]) - 15}";
 		AnswerA.DataContext = this;
 		AnswerB.DataContext = this;
 		AnswerC.DataContext = this;
@@ -24,18 +26,19 @@ public sealed partial class QuestionPage : Page
 		RevealAnswerBtn.DataContext = this;
 		GoToQuestionBoardBtn.DataContext = this;
 
-		if (App.Questions[App.ActiveQuestion - 1].IsMultiChoice)
+		if (question.IsMultiChoice)
 		{
 			SingleAnswerGrid.SetValue(VisibilityProperty, Visibility.Collapsed);
-			AnswerAText.SetValue(TextBlock.TextProperty, App.Questions[App.ActiveQuestion - 1].Options[0]);
-			AnswerBText.SetValue(TextBlock.TextProperty, App.Questions[App.ActiveQuestion - 1].Options[1]);
-			AnswerCText.SetValue(TextBlock.TextProperty, App.Questions[App.ActiveQuestion - 1].Options[2]);
-			AnswerDText.SetValue(TextBlock.TextProperty, App.Questions[App.ActiveQuestion - 1].Options[3]);
+			AnswerAText.SetValue(TextBlock.TextProperty, question.Options[0]);
+			AnswerBText.SetValue(TextBlock.TextProperty, question.Options[1]);
+			AnswerCText.SetValue(TextBlock.TextProperty, question.Options[2]);
+			AnswerDText.SetValue(TextBlock.TextProperty, question.Options[3]);
 			ResizeMulti();
 			Window.Current.SizeChanged += (s, e) =>
 			{
 				ResizeMulti();
 			};
+			DispatcherQueue.TryEnqueue(ResizeMulti);
 		}
 		else
 		{
@@ -45,14 +48,22 @@ public sealed partial class QuestionPage : Page
 			{
 				ResizeSingle();
 			};
+			DispatcherQueue.TryEnqueue(ResizeSingle);
 		}
 
-		Storyboard storyboardMain = App.SlideInAnimation("X", TimeSpan.FromSeconds(0.5), RootGrid, MainTransform);
-		storyboardMain.Completed += (s, args) =>
+		if (question.Used)
 		{
-			StartCountdown();
-		};
-		storyboardMain.Begin();
+			AnswerSelect(RevealAnswerBtn, new RoutedEventArgs());
+		}
+		else
+		{
+			Storyboard storyboardMain = App.SlideInAnimation("X", TimeSpan.FromSeconds(0.5), RootGrid, MainTransform);
+			storyboardMain.Completed += (s, args) =>
+			{
+				StartCountdown();
+			};
+			storyboardMain.Begin();
+		}
 	}
 
 	private void StartCountdown()
@@ -80,13 +91,13 @@ public sealed partial class QuestionPage : Page
 			if (secondsRemaining <= 0)
 			{
 				timer.Stop();
-				if (App.Questions[App.ActiveQuestion - 1].IsMultiChoice)
+				if (question.IsMultiChoice)
 				{
 					AnswerSelect(RevealAnswerBtn, new RoutedEventArgs());
 				}
 				else
 				{
-					AnswerSelect(App.Questions[App.ActiveQuestion - 1].Answer == "A" ? AnswerA : AnswerB, new RoutedEventArgs());
+					AnswerSelect(question.Answer == "A" ? AnswerA : AnswerB, new RoutedEventArgs());
 				}
 			}
 		};
@@ -117,7 +128,7 @@ public sealed partial class QuestionPage : Page
 	{
 		timer.Stop();
 
-		((QuestionPage)((Button)sender).DataContext).AnswerCorrectReference.SetValue(TextBlock.TextProperty, App.Questions[App.ActiveQuestion - 1].Reference);
+		((QuestionPage)((Button)sender).DataContext).AnswerCorrectReference.SetValue(TextBlock.TextProperty, question.Reference);
 		string btnName;
 		try
 		{
@@ -128,7 +139,7 @@ public sealed partial class QuestionPage : Page
 			btnName = "timeout";
 		}
 
-		if (!App.Questions[App.ActiveQuestion - 1].IsMultiChoice)
+		if (!question.IsMultiChoice)
 		{
 			Storyboard storyboard = App.SlideOutAnimation("X", TimeSpan.FromSeconds(0.5), ((QuestionPage)((FrameworkElement)sender).DataContext).SingleAnswerGrid, ((QuestionPage)((FrameworkElement)sender).DataContext).SingleTransform, 200);
 			storyboard.Completed += (s, args) =>
@@ -137,11 +148,16 @@ public sealed partial class QuestionPage : Page
 				((QuestionPage)((FrameworkElement)sender).DataContext).SingleAnswerGrid.SetValue(VisibilityProperty, Visibility.Collapsed);
 				((QuestionPage)((FrameworkElement)sender).DataContext).CorrectAnswerGrid.SetValue(VisibilityProperty, Visibility.Visible);
 				((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrect.SetValue(HorizontalContentAlignmentProperty, HorizontalAlignment.Center);
-				((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrectLabel.SetValue(TextBlock.TextProperty, "Correct Answer");
+				((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrectLabel.SetValue(TextBlock.TextProperty, question.Used ? "This question has\nalready been\nanswered" : "Correct Answer");
+				((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrectLabel.Foreground = new SolidColorBrush(Color.FromArgb(255, 255, 255, 0));
 				((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrectIcon.SetValue(VisibilityProperty, Visibility.Collapsed);
 				((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrect.SetValue(BackgroundProperty, new SolidColorBrush(OptionColors[0]));
-				((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrectText.SetValue(TextBlock.TextProperty, App.Questions[App.ActiveQuestion - 1].Answer);
+				((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrectText.SetValue(TextBlock.TextProperty, question.Answer);
 				Storyboard storyboard = App.SlideInAnimation("X", TimeSpan.FromSeconds(0.5), ((QuestionPage)((FrameworkElement)sender).DataContext).CorrectAnswerGrid, ((QuestionPage)((FrameworkElement)sender).DataContext).CorrectTransform, 200);
+				storyboard.Completed += (s2, args2) =>
+				{
+					App.Questions[(int)App.Category][App.ActiveQuestion - 1].Used = true;
+				};
 				storyboard.Begin();
 			};
 			storyboard.Begin();
@@ -154,23 +170,43 @@ public sealed partial class QuestionPage : Page
 				((QuestionPage)((FrameworkElement)sender).DataContext).MultiAnswerGrid.SetValue(VisibilityProperty, Visibility.Collapsed);
 				((QuestionPage)((FrameworkElement)sender).DataContext).SingleAnswerGrid.SetValue(VisibilityProperty, Visibility.Collapsed);
 				((QuestionPage)((FrameworkElement)sender).DataContext).CorrectAnswerGrid.SetValue(VisibilityProperty, Visibility.Visible);
-				if (secondsRemaining > 0)
+				if (question.Used)
 				{
-					((QuestionPage)((FrameworkElement)sender).DataContext).selectedAnswer = btnName[6].ToString();
-					((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrectLabel.SetValue(TextBlock.TextProperty, ((QuestionPage)((FrameworkElement)sender).DataContext).selectedAnswer == App.Questions[App.ActiveQuestion - 1].Answer ? "Correct!" : "Incorrect!");
-					((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrectLabel.Foreground = ((QuestionPage)((FrameworkElement)sender).DataContext).selectedAnswer == App.Questions[App.ActiveQuestion - 1].Answer ? new SolidColorBrush(Color.FromArgb(255, 0, 128, 0)) : new SolidColorBrush(Color.FromArgb(255, 128, 0, 0));
+					((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrectLabel.SetValue(TextBlock.TextProperty, "This question has\nalready been\nanswered");
+					((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrectLabel.Foreground = new SolidColorBrush(Color.FromArgb(255, 255, 255, 0));
 				}
 				else
 				{
-					((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrectLabel.SetValue(TextBlock.TextProperty, "Time's up!");
-					((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrectLabel.Foreground = new SolidColorBrush(Color.FromArgb(255, 128, 0, 0));
+					if (secondsRemaining > 0)
+					{
+						((QuestionPage)((FrameworkElement)sender).DataContext).selectedAnswer = btnName[6].ToString();
+						if (((QuestionPage)((FrameworkElement)sender).DataContext).selectedAnswer == question.Answer)
+						{
+							((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrectLabel.SetValue(TextBlock.TextProperty, "Correct!");
+							((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrectLabel.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 128, 0));
+						}
+						else
+						{
+							((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrectLabel.SetValue(TextBlock.TextProperty, "Incorrect!");
+							((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrectLabel.Foreground = new SolidColorBrush(Color.FromArgb(255, 128, 0, 0));
+						}
+					}
+					else
+					{
+						((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrectLabel.SetValue(TextBlock.TextProperty, "Time's up!");
+						((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrectLabel.Foreground = new SolidColorBrush(Color.FromArgb(255, 128, 0, 0));
+					}
 				}
 
-				((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrectText.SetValue(TextBlock.TextProperty, App.Questions[App.ActiveQuestion - 1].Options[App.Questions[App.ActiveQuestion - 1].Answer[0] - 65]);
-				((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrect.SetValue(BackgroundProperty, new SolidColorBrush(OptionColors[App.Questions[App.ActiveQuestion - 1].Answer[0] - 65]));
-				((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrectIconText.Text = App.Questions[App.ActiveQuestion - 1].Answer;
+				((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrectText.SetValue(TextBlock.TextProperty, question.Options[question.Answer[0] - 65]);
+				((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrect.SetValue(BackgroundProperty, new SolidColorBrush(OptionColors[question.Answer[0] - 65]));
+				((QuestionPage)((FrameworkElement)sender).DataContext).AnswerCorrectIconText.Text = question.Answer;
 
 				Storyboard storyboard = App.SlideInAnimation("X", TimeSpan.FromSeconds(0.5), ((QuestionPage)((FrameworkElement)sender).DataContext).CorrectAnswerGrid, ((QuestionPage)((FrameworkElement)sender).DataContext).CorrectTransform, 200);
+				storyboard.Completed += (s2, args2) =>
+				{
+					App.Questions[(int)App.Category][App.ActiveQuestion - 1].Used = true;
+				};
 				storyboard.Begin();
 			};
 			storyboard.Begin();
@@ -182,7 +218,7 @@ public sealed partial class QuestionPage : Page
 		double buttonHeight = Window.Current.Bounds.Height * 0.175;
 		double buttonTextWidth = (Window.Current.Bounds.Width / 2) - buttonHeight - 26;
 
-		QuestionText.FontSize = Window.Current.Bounds.Width * 0.05;
+		ResizeQuestionTextToFit(0.05);
 		AnswerAText.MaxWidth = buttonTextWidth;
 		AnswerAText.FontSize = buttonTextWidth * 0.07;
 		AnswerA.SetValue(HeightProperty, buttonHeight);
@@ -230,7 +266,7 @@ public sealed partial class QuestionPage : Page
 		double buttonHeight = Window.Current.Bounds.Height * 0.175;
 		double buttonTextWidth = (Window.Current.Bounds.Width / 2) - buttonHeight - 26;
 
-		QuestionText.FontSize = Window.Current.Bounds.Width * 0.05;
+		ResizeQuestionTextToFit(0.05);
 		SingleAnswerText.FontSize = Window.Current.Bounds.Width * 0.05;
 		SingleAnswerDesc.FontSize = Window.Current.Bounds.Width * 0.03;
 
@@ -241,5 +277,62 @@ public sealed partial class QuestionPage : Page
 		AnswerCorrectIcon.SetValue(HeightProperty, buttonHeight - 40);
 		AnswerCorrectIcon.SetValue(WidthProperty, buttonHeight - 40);
 		AnswerCorrectIconText.FontSize = (buttonHeight - 40) * 28 / 48;
+	}
+
+	private void ResizeQuestionTextToFit(double maxScale)
+	{
+		double maxFontSize = Window.Current.Bounds.Width * maxScale;
+		double availableWidth = QuestionText.ActualWidth > 0
+			? QuestionText.ActualWidth
+			: Math.Max(1, (Window.Current.Bounds.Width / 2) - 60);
+		double availableHeight = QuestionText.ActualHeight > 0
+			? QuestionText.ActualHeight
+			: Math.Max(1, Window.Current.Bounds.Height - 200);
+
+		string text = question?.QuestionText ?? string.Empty;
+		double minFontSize = 14;
+
+		if (string.IsNullOrWhiteSpace(text) || maxFontSize <= minFontSize)
+		{
+			QuestionText.FontSize = Math.Max(minFontSize, maxFontSize);
+			return;
+		}
+
+		double low = minFontSize;
+		double high = maxFontSize;
+		double best = minFontSize;
+
+		for (int i = 0; i < 12; i++)
+		{
+			double mid = (low + high) / 2;
+			if (DoesQuestionTextFit(text, mid, availableWidth, availableHeight))
+			{
+				best = mid;
+				low = mid;
+			}
+			else
+			{
+				high = mid;
+			}
+		}
+
+		QuestionText.FontSize = best;
+	}
+
+	private bool DoesQuestionTextFit(string text, double fontSize, double maxWidth, double maxHeight)
+	{
+		TextBlock measurementBlock = new()
+		{
+			Text = text,
+			FontFamily = QuestionText.FontFamily,
+			FontWeight = QuestionText.FontWeight,
+			FontStyle = QuestionText.FontStyle,
+			FontStretch = QuestionText.FontStretch,
+			FontSize = fontSize,
+			TextWrapping = TextWrapping.Wrap
+		};
+
+		measurementBlock.Measure(new Windows.Foundation.Size(maxWidth, double.PositiveInfinity));
+		return measurementBlock.DesiredSize.Width <= maxWidth && measurementBlock.DesiredSize.Height <= maxHeight;
 	}
 }

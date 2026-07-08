@@ -1,17 +1,18 @@
 using Microsoft.UI.Xaml.Media.Animation;
-
 namespace ibc2025;
 
-public sealed partial class QuestionBoardPage : Page
+public sealed partial class CategoryPage : Page
 {
-	public QuestionBoardPage()
+	public CategoryPage()
 	{
-		
 		InitializeComponent();
-		CategoryTitle.Text = App.CategoryNames[(int)App.Category];
 		PageBackground.Background = App.DailyBackground;
 		App.SlideInAnimation("X", TimeSpan.FromSeconds(0.5), RootGrid, MainTransform);
-		FillGridWithButtons();
+		WisdomsTrueEndingQuestionCount.Text = $"{App.Questions[(int)App.CategoryTypes.WisdomsTrueEnding].Count(question => !question.Used)} questions remaining";
+		WisdomAppliedQuestionCount.Text = $"{App.Questions[(int)App.CategoryTypes.WisdomApplied].Count(question => !question.Used)} questions remaining";
+		WordsLeftUnspokenQuestionCount.Text = $"{App.Questions[(int)App.CategoryTypes.WordsLeftUnspoken].Count(question => !question.Used)} questions remaining";
+		WisdomSaysQuestionCount.Text = $"{App.Questions[(int)App.CategoryTypes.WisdomSays].Count(question => !question.Used)} questions remaining";
+		LocateTheWisdomQuestionCount.Text = $"{App.Questions[(int)App.CategoryTypes.LocateTheWisdom].Count(question => !question.Used)} questions remaining";
 		Region1Pts.Text = App.TeamPtsDsply[0].ToString();
 		Region2Pts.Text = App.TeamPtsDsply[1].ToString();
 		Region3Pts.Text = App.TeamPtsDsply[2].ToString();
@@ -20,6 +21,7 @@ public sealed partial class QuestionBoardPage : Page
 		Region6Pts.Text = App.TeamPtsDsply[5].ToString();
 		Region7Pts.Text = App.TeamPtsDsply[6].ToString();
 		Region8Pts.Text = App.TeamPtsDsply[7].ToString();
+		// TODO: Combine these watchers into one method
 		Region1Watcher();
 		Region2Watcher();
 		Region3Watcher();
@@ -28,165 +30,6 @@ public sealed partial class QuestionBoardPage : Page
 		Region6Watcher();
 		Region7Watcher();
 		Region8Watcher();
-		if (Window.Current is Window currentWindow)
-		{
-			currentWindow.SizeChanged += RebuildQuestionGridOnResize;
-		}
-		Unloaded += QuestionBoardPageUnloaded;
-	}
-
-	private void RebuildQuestionGridOnResize(object sender, WindowSizeChangedEventArgs e)
-	{
-		FillGridWithButtons();
-	}
-
-	private void QuestionBoardPageUnloaded(object sender, RoutedEventArgs e)
-	{
-		if (Window.Current is Window currentWindow)
-		{
-			currentWindow.SizeChanged -= RebuildQuestionGridOnResize;
-		}
-		Unloaded -= QuestionBoardPageUnloaded;
-	}
-
-	private void FillGridWithButtons()
-	{
-		List<Question>? questions = App.Questions[(int)App.Category];
-		if (questions is null)
-		{
-			QuestionBoard.Children.Clear();
-			QuestionBoard.RowDefinitions.Clear();
-			QuestionBoard.ColumnDefinitions.Clear();
-			QuestionsRemaining.Text = "0 questions remaining";
-			return;
-		}
-
-		QuestionsRemaining.Text = $"{questions.Count(question => !question.Used)} questions remaining";
-
-		QuestionBoard.Children.Clear();
-		QuestionBoard.RowDefinitions.Clear();
-		QuestionBoard.ColumnDefinitions.Clear();
-
-		if (questions.Count == 0)
-		{
-			return;
-		}
-
-		double fallbackWidth = Window.Current?.Bounds.Width ?? 1024;
-		double fallbackHeight = Window.Current?.Bounds.Height ?? 768;
-		double boardWidth = QuestionBoard.ActualWidth > 0
-			? QuestionBoard.ActualWidth
-			: Math.Max(1, fallbackWidth - 360);
-		double boardHeight = QuestionBoard.ActualHeight > 0
-			? QuestionBoard.ActualHeight
-			: Math.Max(1, fallbackHeight - 220);
-
-		(int rows, int cols) = CalculateGridDimensions(questions.Count, boardWidth, boardHeight);
-
-		for (int row = 0; row < rows; row++)
-		{
-			QuestionBoard.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-		}
-
-		for (int col = 0; col < cols; col++)
-		{
-			QuestionBoard.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-		}
-
-		for (int index = 0; index < questions.Count; index++)
-		{
-			int row = index / cols;
-			int col = index % cols;
-			int questionNumber = index + 1;
-			Question question = questions[index];
-
-            Button button = new()
-            {
-                Content = questionNumber,
-                FontFamily = new FontFamily("Bahnschrift"),
-                Name = "Q" + questionNumber,
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-                VerticalAlignment = VerticalAlignment.Stretch,
-                Background = question.Used
-                    ? new SolidColorBrush(Windows.UI.ColorHelper.FromArgb(255, 50, 50, 50))
-                    : new SolidColorBrush(Windows.UI.ColorHelper.FromArgb(15, 50, 50, 50)),
-                Style = (Style)Application.Current.Resources["AnimatedOutlineButton"],
-                HorizontalContentAlignment = HorizontalAlignment.Center,
-                VerticalContentAlignment = VerticalAlignment.Center
-            };
-            button.SizeChanged += (s, e) =>
-			{
-				button.FontSize = Math.Min(button.ActualWidth, button.ActualHeight) * 0.5;
-			};
-            button.Click += GoToQuestion;
-			Grid.SetRow(button, row);
-			Grid.SetColumn(button, col);
-			QuestionBoard.Children.Add(button);
-		}
-	}
-
-	private static (int rows, int cols) CalculateGridDimensions(int questionCount, double boardWidth, double boardHeight)
-	{
-		const double targetCellAspectRatio = 4d / 5d; // width : height
-
-		int bestRows = questionCount;
-		int bestCols = 1;
-		double bestScore = double.MaxValue;
-		int lowestEmptySlots = int.MaxValue;
-
-		for (int cols = 1; cols <= questionCount; cols++)
-		{
-			int rows = (int)Math.Ceiling((double)questionCount / cols);
-			int emptySlots = (rows * cols) - questionCount;
-
-			double cellWidth = boardWidth / cols;
-			double cellHeight = boardHeight / rows;
-			double cellAspect = cellWidth / Math.Max(1, cellHeight);
-			double score = Math.Abs(cellAspect - targetCellAspectRatio);
-
-			bool isBetter = score < bestScore - 0.0001
-				|| (Math.Abs(score - bestScore) <= 0.0001 && emptySlots < lowestEmptySlots)
-				|| (Math.Abs(score - bestScore) <= 0.0001 && emptySlots == lowestEmptySlots && rows < bestRows);
-
-			if (isBetter)
-			{
-				bestScore = score;
-				lowestEmptySlots = emptySlots;
-				bestRows = rows;
-				bestCols = cols;
-			}
-		}
-
-		return (bestRows, bestCols);
-	}
-
-	public static void GoToQuestion(object sender, RoutedEventArgs e)
-	{
-		App.ActiveQuestion = int.Parse(sender.GetValue(NameProperty).ToString()[1..]);
-		Button btn = (Button)sender;
-		DependencyObject parent = btn;
-		QuestionBoardPage page = null;
-		while (parent != null && page == null)
-		{
-			parent = VisualTreeHelper.GetParent(parent);
-			page = parent as QuestionBoardPage;
-		}
-		Storyboard storyboard = App.SlideOutAnimation("X", TimeSpan.FromSeconds(0.5), page.RootGrid, page.MainTransform);
-		storyboard.Completed += (s, args) =>
-		{
-			_ = ((Frame)Window.Current.Content).Navigate(typeof(QuestionPage));
-		};
-		storyboard.Begin();
-	}
-
-	public void BackToCategory(object sender, RoutedEventArgs e)
-	{
-		Storyboard storyboard = App.SlideOutAnimation("X", TimeSpan.FromSeconds(0.5), RootGrid, MainTransform);
-		storyboard.Completed += static (s, args) =>
-		{
-			_ = ((Frame)Window.Current.Content).Navigate(typeof(CategoryPage));
-		};
-		storyboard.Begin();
 	}
 
 	private void RegionIncrWrapper(object sender, RoutedEventArgs e)
@@ -196,7 +39,7 @@ public sealed partial class QuestionBoardPage : Page
 
 	public static void RegionIncr(object sender, RoutedEventArgs e)
 	{
-		App.TeamPts[int.Parse(sender.GetValue(NameProperty).ToString()[..7].Replace("Region", "")) - 1] += 100 * ((int)App.Category + 1);
+		App.TeamPts[int.Parse(sender.GetValue(NameProperty).ToString()[..7].Replace("Region", "")) - 1] += 100;
 	}
 
 	private void RegionDecrWrapper(object sender, RoutedEventArgs e)
@@ -206,7 +49,7 @@ public sealed partial class QuestionBoardPage : Page
 
 	public static void RegionDecr(object sender, RoutedEventArgs e)
 	{
-		App.TeamPts[int.Parse(sender.GetValue(NameProperty).ToString()[..7].Replace("Region", "")) - 1] -= 100 * ((int)App.Category + 1);
+		App.TeamPts[int.Parse(sender.GetValue(NameProperty).ToString()[..7].Replace("Region", "")) - 1] -= 100;
 	}
 
 	private async void Region1Watcher()
@@ -496,5 +339,39 @@ public sealed partial class QuestionBoardPage : Page
 			}
 		}
 	}
-}
 
+	private void EnterCategory(object sender, RoutedEventArgs e)
+	{
+		if (sender is not FrameworkElement element)
+		{
+			Console.WriteLine("Sender is not a FrameworkElement.");
+			return;
+		}
+
+		switch (element.Name)
+		{
+			case "WisdomsTrueEnding":
+				App.Category = App.CategoryTypes.WisdomsTrueEnding;
+				break;
+			case "WisdomApplied":
+				App.Category = App.CategoryTypes.WisdomApplied;
+				break;
+			case "WordsLeftUnspoken":
+				App.Category = App.CategoryTypes.WordsLeftUnspoken;
+				break;
+			case "WisdomSays":
+				App.Category = App.CategoryTypes.WisdomSays;
+				break;
+			case "LocateTheWisdom":
+				App.Category = App.CategoryTypes.LocateTheWisdom;
+				break;
+		}
+
+		Storyboard storyboard = App.SlideOutAnimation("X", TimeSpan.FromSeconds(0.5), RootGrid, MainTransform);
+		storyboard.Completed += static (s, args) =>
+		{
+			_ = ((Frame)Window.Current.Content).Navigate(typeof(QuestionBoardPage));
+		};
+		storyboard.Begin();
+	}
+}
