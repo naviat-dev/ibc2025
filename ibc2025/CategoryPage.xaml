@@ -271,14 +271,6 @@
 					<ColumnDefinition Width="*"/>
 					<ColumnDefinition Width="40"/>
 				</Grid.ColumnDefinitions>
-				<Button
-					Grid.Column="0"
-					Content="-"
-					x:Name="Region1DecrBtn"
-					Click="RegionDecrWrapper"
-					FontFamily="Bahnschrift"
-					HorizontalAlignment="Stretch"
-					VerticalAlignment="Stretch"/>
 				<StackPanel
 					Grid.Column="1"
 					HorizontalAlignment="Center"
@@ -300,14 +292,6 @@
 						FontSize="50"
 						x:Name="Region1Pts"/>
 				</StackPanel>
-				<Button
-					Grid.Column="2"
-					Content="+"
-					x:Name="Region1IncrBtn"
-					Click="RegionIncrWrapper"
-					FontFamily="Bahnschrift"
-					HorizontalAlignment="Stretch"
-					VerticalAlignment="Stretch"/>
 			</Grid>
 			<Grid
 				Grid.Row="1"
@@ -331,14 +315,6 @@
 					<ColumnDefinition Width="*"/>
 					<ColumnDefinition Width="40"/>
 				</Grid.ColumnDefinitions>
-				<Button
-					Grid.Column="0"
-					Content="-"
-					x:Name="Region2DecrBtn"
-					Click="RegionDecrWrapper"
-					FontFamily="Bahnschrift"
-					HorizontalAlignment="Stretch"
-					VerticalAlignment="Stretch"/>
 				<StackPanel
 					Grid.Column="1"
 					HorizontalAlignment="Center"
@@ -360,14 +336,6 @@
 						FontSize="50"
 						x:Name="Region2Pts"/>
 				</StackPanel>
-				<Button
-					Grid.Column="2"
-					Content="+"
-					x:Name="Region2IncrBtn"
-					Click="RegionIncrWrapper"
-					FontFamily="Bahnschrift"
-					HorizontalAlignment="Stretch"
-					VerticalAlignment="Stretch"/>
 			</Grid>
 			<Grid
 				Grid.Row="2"
@@ -391,14 +359,6 @@
 					<ColumnDefinition Width="*"/>
 					<ColumnDefinition Width="40"/>
 				</Grid.ColumnDefinitions>
-				<Button
-					Grid.Column="0"
-					Content="-"
-					x:Name="Region3DecrBtn"
-					Click="RegionDecrWrapper"
-					FontFamily="Bahnschrift"
-					HorizontalAlignment="Stretch"
-					VerticalAlignment="Stretch"/>
 				<StackPanel
 					Grid.Column="1"
 					HorizontalAlignment="Center"
@@ -420,14 +380,6 @@
 						FontSize="50"
 						x:Name="Region3Pts"/>
 				</StackPanel>
-				<Button
-					Grid.Column="2"
-					Content="+"
-					x:Name="Region3IncrBtn"
-					Click="RegionIncrWrapper"
-					FontFamily="Bahnschrift"
-					HorizontalAlignment="Stretch"
-					VerticalAlignment="Stretch"/>
 			</Grid>
 			<Grid
 				Grid.Row="3"
@@ -451,14 +403,6 @@
 					<ColumnDefinition Width="*"/>
 					<ColumnDefinition Width="40"/>
 				</Grid.ColumnDefinitions>
-				<Button
-					Grid.Column="0"
-					Content="-"
-					x:Name="Region4DecrBtn"
-					Click="RegionDecrWrapper"
-					FontFamily="Bahnschrift"
-					HorizontalAlignment="Stretch"
-					VerticalAlignment="Stretch"/>
 				<StackPanel
 					Grid.Column="1"
 					HorizontalAlignment="Center"
@@ -480,14 +424,6 @@
 						FontSize="50"
 						x:Name="Region4Pts"/>
 				</StackPanel>
-				<Button
-					Grid.Column="2"
-					Content="+"
-					x:Name="Region4IncrBtn"
-					Click="RegionIncrWrapper"
-					FontFamily="Bahnschrift"
-					HorizontalAlignment="Stretch"
-					VerticalAlignment="Stretch"/>
 			</Grid>
 			<Grid
 				Grid.Row="4"
@@ -511,14 +447,6 @@
 					<ColumnDefinition Width="*"/>
 					<ColumnDefinition Width="40"/>
 				</Grid.ColumnDefinitions>
-				<Button
-					Grid.Column="0"
-					Content="-"
-					x:Name="Region5DecrBtn"
-					Click="RegionDecrWrapper"
-					FontFamily="Bahnschrift"
-					HorizontalAlignment="Stretch"
-					VerticalAlignment="Stretch"/>
 				<StackPanel
 					Grid.Column="1"
 					HorizontalAlignment="Center"
@@ -540,14 +468,6 @@
 						FontSize="50"
 						x:Name="Region5Pts"/>
 				</StackPanel>
-				<Button
-					Grid.Column="2"
-					Content="+"
-					x:Name="Region5IncrBtn"
-					Click="RegionIncrWrapper"
-					FontFamily="Bahnschrift"
-					HorizontalAlignment="Stretch"
-					VerticalAlignment="Stretch"/>
 			</Grid>
 			<Grid
 				Grid.Row="5"
@@ -571,14 +491,6 @@
 					<ColumnDefinition Width="*"/>
 					<ColumnDefinition Width="40"/>
 				</Grid.ColumnDefinitions>
-				<Button
-					Grid.Column="0"
-					Content="-"
-					x:Name="Region6DecrBtn"
-					Click="RegionDecrWrapper"
-					FontFamily="Bahnschrift"
-					HorizontalAlignment="Stretch"
-					VerticalAlignment="Stretch"/>
 				<StackPanel
 					Grid.Column="1"
 					HorizontalAlignment="Center"
@@ -600,14 +512,6 @@
 						FontSize="50"
 						x:Name="Region6Pts"/>
 				</StackPanel>
-				<Button
-					Grid.Column="2"
-					Content="+"
-					x:Name="Region6IncrBtn"
-					Click="RegionIncrWrapper"
-					FontFamily="Bahnschrift"
-					HorizontalAlignment="Stretch"
-					VerticalAlignment="Stretch"/>
 			</Grid>
 			<Grid
 				Grid.Row="6"
@@ -631,14 +535,6 @@
 					<ColumnDefinition Width="*"/>
 					<ColumnDefinition Width="40"/>
 				</Grid.ColumnDefinitions>
-				<Button
-					Grid.Column="0"
-					Content="-"
-					x:Name="Region7DecrBtn"
-					Click="RegionDecrWrapper"
-					FontFamily="Bahnschrift"
-					HorizontalAlignment="Stretch"
-					VerticalAlignment="Stretch"/>
 				<StackPanel
 					Grid.Column="1"
 					HorizontalAlignment="Center"
@@ -660,14 +556,6 @@
 						FontSize="50"
 						x:Name="Region7Pts"/>
 				</StackPanel>
-				<Button
-					Grid.Column="2"
-					Content="+"
-					x:Name="Region7IncrBtn"
-					Click="RegionIncrWrapper"
-					FontFamily="Bahnschrift"
-					HorizontalAlignment="Stretch"
-					VerticalAlignment="Stretch"/>
 			</Grid>
 			<Grid
 				Grid.Row="7"
@@ -691,14 +579,6 @@
 					<ColumnDefinition Width="*"/>
 					<ColumnDefinition Width="40"/>
 				</Grid.ColumnDefinitions>
-				<Button
-					Grid.Column="0"
-					Content="-"
-					x:Name="Region8DecrBtn"
-					Click="RegionDecrWrapper"
-					FontFamily="Bahnschrift"
-					HorizontalAlignment="Stretch"
-					VerticalAlignment="Stretch"/>
 				<StackPanel
 					Grid.Column="1"
 					HorizontalAlignment="Center"
@@ -720,14 +600,6 @@
 						FontSize="50"
 						x:Name="Region8Pts"/>
 				</StackPanel>
-				<Button
-					Grid.Column="2"
-					Content="+"
-					x:Name="Region8IncrBtn"
-					Click="RegionIncrWrapper"
-					FontFamily="Bahnschrift"
-					HorizontalAlignment="Stretch"
-					VerticalAlignment="Stretch"/>
 			</Grid>
 		</Grid>
 	</Grid>
