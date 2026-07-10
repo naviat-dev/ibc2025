@@ -57,6 +57,8 @@ public sealed partial class QuestionBoardPage : Page
 			QuestionBoard.Children.Clear();
 			QuestionBoard.RowDefinitions.Clear();
 			QuestionBoard.ColumnDefinitions.Clear();
+			QuestionBoard.Width = 0;
+			QuestionBoard.Height = 0;
 			QuestionsRemaining.Text = "0 questions remaining";
 			return;
 		}
@@ -69,28 +71,35 @@ public sealed partial class QuestionBoardPage : Page
 
 		if (questions.Count == 0)
 		{
+			QuestionBoard.Width = 0;
+			QuestionBoard.Height = 0;
 			return;
 		}
 
+		const int cols = 10;
+		int rows = (int)Math.Ceiling((double)questions.Count / cols);
+
 		double fallbackWidth = Window.Current?.Bounds.Width ?? 1024;
 		double fallbackHeight = Window.Current?.Bounds.Height ?? 768;
-		double boardWidth = QuestionBoard.ActualWidth > 0
-			? QuestionBoard.ActualWidth
+		double availableWidth = QuestionBoardContainer.ActualWidth > 0
+			? QuestionBoardContainer.ActualWidth
 			: Math.Max(1, fallbackWidth - 360);
-		double boardHeight = QuestionBoard.ActualHeight > 0
-			? QuestionBoard.ActualHeight
+		double availableHeight = QuestionBoardContainer.ActualHeight > 0
+			? QuestionBoardContainer.ActualHeight
 			: Math.Max(1, fallbackHeight - 220);
 
-		(int rows, int cols) = CalculateGridDimensions(questions.Count, boardWidth, boardHeight);
+		double cellSize = Math.Max(1, Math.Floor(Math.Min(availableWidth / cols, availableHeight / rows)));
+		QuestionBoard.Width = cellSize * cols;
+		QuestionBoard.Height = cellSize * rows;
 
 		for (int row = 0; row < rows; row++)
 		{
-			QuestionBoard.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+			QuestionBoard.RowDefinitions.Add(new RowDefinition { Height = new GridLength(cellSize, GridUnitType.Pixel) });
 		}
 
 		for (int col = 0; col < cols; col++)
 		{
-			QuestionBoard.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+			QuestionBoard.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(cellSize, GridUnitType.Pixel) });
 		}
 
 		for (int index = 0; index < questions.Count; index++)
@@ -123,41 +132,6 @@ public sealed partial class QuestionBoardPage : Page
 			Grid.SetColumn(button, col);
 			QuestionBoard.Children.Add(button);
 		}
-	}
-
-	private static (int rows, int cols) CalculateGridDimensions(int questionCount, double boardWidth, double boardHeight)
-	{
-		const double targetCellAspectRatio = 4d / 5d; // width : height
-
-		int bestRows = questionCount;
-		int bestCols = 1;
-		double bestScore = double.MaxValue;
-		int lowestEmptySlots = int.MaxValue;
-
-		for (int cols = 1; cols <= questionCount; cols++)
-		{
-			int rows = (int)Math.Ceiling((double)questionCount / cols);
-			int emptySlots = (rows * cols) - questionCount;
-
-			double cellWidth = boardWidth / cols;
-			double cellHeight = boardHeight / rows;
-			double cellAspect = cellWidth / Math.Max(1, cellHeight);
-			double score = Math.Abs(cellAspect - targetCellAspectRatio);
-
-			bool isBetter = score < bestScore - 0.0001
-				|| (Math.Abs(score - bestScore) <= 0.0001 && emptySlots < lowestEmptySlots)
-				|| (Math.Abs(score - bestScore) <= 0.0001 && emptySlots == lowestEmptySlots && rows < bestRows);
-
-			if (isBetter)
-			{
-				bestScore = score;
-				lowestEmptySlots = emptySlots;
-				bestRows = rows;
-				bestCols = cols;
-			}
-		}
-
-		return (bestRows, bestCols);
 	}
 
 	public static void GoToQuestion(object sender, RoutedEventArgs e)

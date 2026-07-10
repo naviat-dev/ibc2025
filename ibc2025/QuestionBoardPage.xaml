@@ -66,31 +66,13 @@
             </Grid>
             <Grid
                 Grid.Row="1"
-                x:Name="QuestionBoard"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                Margin="0, 0, 20, 0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                x:Name="QuestionBoardContainer"
+                Margin="0,0,20,0">
+                <Grid
+                    x:Name="QuestionBoard"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                </Grid>
             </Grid>
         </Grid>
         <Grid
@@ -201,7 +183,7 @@
                     VerticalAlignment="Center">
                     <TextBlock
                         x:Name="Region2Title"
-                        Text="CA Region 1"
+                        Text="CA Ottawa"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Margin="0,10,0,0"
@@ -321,7 +303,7 @@
                     VerticalAlignment="Center">
                     <TextBlock
                         x:Name="Region4Title"
-                        Text="CA Region 2"
+                        Text="CA Toronto"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Margin="0,10,0,0"
@@ -441,7 +423,7 @@
                     VerticalAlignment="Center">
                     <TextBlock
                         x:Name="Region6Title"
-                        Text="CA Region 3"
+                        Text="CA Winnipeg"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Margin="0,10,0,0"
@@ -561,7 +543,7 @@
                     VerticalAlignment="Center">
                     <TextBlock
                         x:Name="Region8Title"
-                        Text="CA Region 4"
+                        Text="CA Calgary"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Margin="0,10,0,0"
