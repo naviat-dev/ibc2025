@@ -280,13 +280,36 @@ public sealed partial class QuestionPage : Page
 
 	private void ResizeQuestionTextToFit(double maxScale)
 	{
-		double maxFontSize = Window.Current.Bounds.Width * maxScale;
-		double availableWidth = QuestionText.ActualWidth > 0
-			? QuestionText.ActualWidth
-			: Math.Max(1, (Window.Current.Bounds.Width / 2) - 60);
-		double availableHeight = QuestionText.ActualHeight > 0
-			? QuestionText.ActualHeight
-			: Math.Max(1, Window.Current.Bounds.Height - 200);
+		double windowWidth = Window.Current?.Bounds.Width ?? 1024;
+		double windowHeight = Window.Current?.Bounds.Height ?? 768;
+		double maxFontSize = windowWidth * maxScale;
+		double availableWidth = Math.Max(1, (windowWidth / 2) - 60);
+		double availableHeight = Math.Max(1, windowHeight - 200);
+
+		if (QuestionText.Parent is Grid parentGrid)
+		{
+			int questionColumnIndex = Grid.GetColumn(QuestionText);
+			if (questionColumnIndex >= 0 && questionColumnIndex < parentGrid.ColumnDefinitions.Count)
+			{
+				double columnWidth = parentGrid.ColumnDefinitions[questionColumnIndex].ActualWidth;
+				if (columnWidth > 0)
+				{
+					availableWidth = columnWidth;
+				}
+			}
+			else if (parentGrid.ActualWidth > 0)
+			{
+				availableWidth = parentGrid.ActualWidth;
+			}
+
+			if (parentGrid.ActualHeight > 0)
+			{
+				availableHeight = parentGrid.ActualHeight;
+			}
+		}
+
+		availableWidth = Math.Max(1, availableWidth - QuestionText.Margin.Left - QuestionText.Margin.Right);
+		availableHeight = Math.Max(1, availableHeight - QuestionText.Margin.Top - QuestionText.Margin.Bottom);
 
 		ResizeTextBlockToFit(QuestionText, question?.QuestionText ?? string.Empty, availableWidth, availableHeight, maxFontSize);
 	}
